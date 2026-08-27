@@ -8,6 +8,9 @@
 01-basics/
   pure-node/   Node.js 기본 모듈만 사용하는 예제
   express/     Express를 사용하는 같은 기능의 예제
+02-file-read/
+  pure-node/   파일을 직접 읽어 JSON 응답을 만드는 예제
+  express/     Express 라우팅과 res.json으로 같은 기능을 만드는 예제
 ```
 
 ## 1단계 목표
@@ -24,7 +27,7 @@
 먼저 Pure Node 예제를 실행합니다.
 
 ```powershell
-cd 01-basics/pure-node
+cd C:\dev\node2026\01-basics\pure-node
 node server.js
 ```
 
@@ -33,7 +36,7 @@ node server.js
 그 다음 Express 예제를 실행합니다.
 
 ```powershell
-cd ../express
+cd C:\dev\node2026\01-basics\express
 npm install
 node server.js
 ```
@@ -47,3 +50,29 @@ node server.js
 - 404 처리가 어떤 식으로 표현되는지
 - 같은 기능인데 Express 코드가 왜 읽기 쉬운지
 
+## 2단계 목표
+
+JSON 파일을 읽어서 API 응답으로 보내고, 파일 읽기 중 생길 수 있는 에러를 처리합니다.
+
+- `/users` : `data/users.json` 전체 읽기
+- `/users/1` : 특정 사용자 한 명 찾기
+- `/missing-file` : 없는 파일을 읽을 때의 에러 처리 확인
+
+Pure Node 예제를 실행합니다.
+
+```powershell
+cd C:\dev\node2026\02-file-read\pure-node
+node server.js
+```
+
+브라우저에서 `http://localhost:3100/users`를 엽니다.
+
+Express 예제를 실행합니다.
+
+```powershell
+cd C:\dev\node2026\02-file-read\express
+npm install
+node server.js
+```
+
+브라우저에서 `http://localhost:4100/users`를 엽니다.
