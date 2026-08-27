@@ -11,6 +11,9 @@
 02-file-read/
   pure-node/   파일을 직접 읽어 JSON 응답을 만드는 예제
   express/     Express 라우팅과 res.json으로 같은 기능을 만드는 예제
+03-html-file/
+  pure-node/   HTML 파일을 직접 읽어서 브라우저에 보내는 예제
+  express/     Express의 sendFile로 같은 HTML 파일 응답을 만드는 예제
 ```
 
 ## 1단계 목표
@@ -76,3 +79,29 @@ node server.js
 ```
 
 브라우저에서 `http://localhost:4100/users`를 엽니다.
+
+## 3단계 목표
+
+`public/index.html` 파일을 서버에서 읽어서 브라우저에 보여주고, 없는 주소의 404 화면도 처리합니다.
+
+- `/` : `public/index.html` 읽기
+- 없는 주소 : 404 상태 코드와 안내 화면 보내기
+
+Pure Node 예제를 실행합니다.
+
+```powershell
+cd C:\dev\node2026\03-html-file\pure-node
+node server.js
+```
+
+브라우저에서 `http://localhost:3200`을 엽니다.
+
+Express 예제를 실행합니다.
+
+```powershell
+cd C:\dev\node2026\03-html-file\express
+npm install
+node server.js
+```
+
+브라우저에서 `http://localhost:4200`을 엽니다.

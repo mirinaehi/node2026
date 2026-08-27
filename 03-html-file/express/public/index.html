@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Express HTML 파일 읽기</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #202124;
+        background: #f6f8fb;
+      }
+
+      main {
+        max-width: 720px;
+        margin: 48px auto;
+        padding: 32px;
+        background: white;
+        border: 1px solid #d8dee8;
+        border-radius: 8px;
+      }
+
+      code {
+        padding: 2px 6px;
+        background: #eef2f7;
+        border-radius: 4px;
+      }
+
+      a {
+        color: #0b57d0;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Express HTML 파일 읽기</h1>
+      <p>
+        이 화면은 <code>public/index.html</code> 파일을 Express의
+        <code>res.sendFile()</code>로 보내서 보여주는 화면입니다.
+      </p>
+      <p>
+        같은 HTML 파일 응답이라도 Express에서는 라우팅과 파일 전송 코드가 더 짧아집니다.
+      </p>
+      <p>
+        <a href="/not-found">없는 주소로 이동해서 404 처리 보기</a>
+      </p>
+    </main>
+  </body>
+</html>
