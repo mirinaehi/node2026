@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Express Modules</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <nav class="nav">
+        <a class="brand" href="/">Express Modules</a>
+        <div class="links" aria-label="예제 링크">
+          <a href="/api/messages">목록 API</a>
+          <a href="/api/messages/1">단건 API</a>
+          <a href="/health">상태 API</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="page">
+      <section class="hero">
+        <p class="eyebrow">06 Express</p>
+        <h1>큰 서버 파일을 작은 모듈로 나눕니다.</h1>
+        <p>
+          서버는 `import`로 라우터를 가져오고, 라우터는 서비스 함수를 가져오고,
+          서비스는 JSON 파일 읽기 유틸을 가져옵니다.
+        </p>
+      </section>
+
+      <section class="flow" aria-label="모듈 연결 흐름">
+        <div>
+          <strong>server.js</strong>
+          <span>앱 조립</span>
+        </div>
+        <div>
+          <strong>routes/messages.js</strong>
+          <span>요청 처리</span>
+        </div>
+        <div>
+          <strong>services/messageService.js</strong>
+          <span>데이터 조회</span>
+        </div>
+        <div>
+          <strong>utils/file.js</strong>
+          <span>JSON 읽기</span>
+        </div>
+      </section>
+
+      <section class="status-panel" aria-live="polite">
+        <div>
+          <h2>모듈 메시지</h2>
+          <p id="statusText">메시지를 불러오는 중입니다.</p>
+        </div>
+        <button id="reloadButton" type="button">다시 불러오기</button>
+      </section>
+
+      <ul id="messageList" class="message-list" aria-label="서버에서 받아온 메시지"></ul>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "node2026-express-modules",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Express example using ES modules and separated files",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

@@ -21,6 +21,12 @@
   data/        API가 읽을 JSON 데이터 파일
   public/      fetch()로 API를 호출하는 정적 프론트 파일
   server.js    정적 파일 제공과 API 라우트를 함께 쓰는 Express 예제
+06-express-modules/
+  routes/      Express Router로 분리한 API 라우트
+  services/    메시지 조회 비즈니스 로직
+  utils/       JSON 파일 읽기 공통 함수
+  public/      fetch()로 API를 호출하는 정적 프론트 파일
+  server.js    import/export로 조립한 Express 서버
 ```
 
 ## 1단계 목표
@@ -153,3 +159,23 @@ node server.js
 ```
 
 브라우저에서 `http://localhost:4400`을 엽니다.
+
+## 6단계 목표
+
+기존 Express API 예제를 ES Module 방식의 `import`와 `export`로 나눕니다.
+
+- `server.js` : Express 앱 생성과 전체 조립
+- `routes/messages.js` : 메시지 API 라우트
+- `services/messageService.js` : 메시지 데이터 조회 로직
+- `utils/file.js` : JSON 파일 읽기 공통 함수
+- `public/app.js` : 브라우저에서 `fetch()`로 API 호출
+
+Express 모듈 분리 예제를 실행합니다.
+
+```powershell
+cd C:\dev\node2026\06-express-modules
+npm install
+node server.js
+```
+
+브라우저에서 `http://localhost:4500`을 엽니다.
