@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>정적 파일 소개</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav">
+        <a class="brand" href="/">Express Static</a>
+        <div class="nav-links" aria-label="주요 링크">
+          <a href="/">홈</a>
+          <a href="/about.html">소개</a>
+          <a href="/health">상태 API</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="layout narrow">
+      <section class="content">
+        <p class="eyebrow">about.html</p>
+        <h1>이 파일도 별도 라우트 없이 열립니다.</h1>
+        <p>
+          서버 코드에는 `/about.html` 라우트가 없습니다. 그래도 브라우저에서
+          접근할 수 있는 이유는 `express.static()`이 `public` 폴더 안의 파일을
+          대신 찾아주기 때문입니다.
+        </p>
+        <p>
+          다음 단계에서는 이 정적 화면에서 API를 호출해서 서버 데이터와 연결해볼 수 있습니다.
+        </p>
+        <p><a class="text-link" href="/">홈으로 돌아가기</a></p>
+      </section>
+    </main>
+  </body>
+</html>

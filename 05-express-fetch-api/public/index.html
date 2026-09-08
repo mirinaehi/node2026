@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Express fetch API</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <nav class="nav">
+        <a class="brand" href="/">Express Fetch API</a>
+        <a class="api-link" href="/api/messages">/api/messages</a>
+      </nav>
+    </header>
+
+    <main class="page">
+      <section class="hero">
+        <p class="eyebrow">05 Express</p>
+        <h1>브라우저에서 Express API를 호출합니다.</h1>
+        <p>
+          이 화면은 정적 파일로 제공되고, 아래 메시지 목록은
+          <code>fetch("/api/messages")</code>로 받아온 JSON 데이터입니다.
+        </p>
+      </section>
+
+      <section class="status-panel" aria-live="polite">
+        <div>
+          <h2>메시지 목록</h2>
+          <p id="statusText">메시지를 불러오는 중입니다.</p>
+        </div>
+        <button id="reloadButton" type="button">다시 불러오기</button>
+      </section>
+
+      <section>
+        <ul id="messageList" class="message-list" aria-label="서버에서 받아온 메시지"></ul>
+      </section>
+    </main>
+  </body>
+</html>

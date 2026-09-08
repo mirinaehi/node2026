@@ -14,6 +14,13 @@
 03-html-file/
   pure-node/   HTML 파일을 직접 읽어서 브라우저에 보내는 예제
   express/     Express의 sendFile로 같은 HTML 파일 응답을 만드는 예제
+04-express-static/
+  public/      express.static()으로 제공할 HTML, CSS, JS, 이미지 파일
+  server.js    Express 정적 파일 서버 예제
+05-express-fetch-api/
+  data/        API가 읽을 JSON 데이터 파일
+  public/      fetch()로 API를 호출하는 정적 프론트 파일
+  server.js    정적 파일 제공과 API 라우트를 함께 쓰는 Express 예제
 ```
 
 ## 1단계 목표
@@ -105,3 +112,44 @@ node server.js
 ```
 
 브라우저에서 `http://localhost:4200`을 엽니다.
+
+## 4단계 목표
+
+이제부터는 Express만 사용합니다. `express.static()`으로 `public` 폴더 안의 정적 파일을 자동 제공하는 방법을 배웁니다.
+
+- `/` : `public/index.html` 자동 응답
+- `/about.html` : `public/about.html` 자동 응답
+- `/style.css` : CSS 파일 자동 응답
+- `/app.js` : 브라우저 JavaScript 파일 자동 응답
+- `/assets/static-flow.svg` : 이미지 파일 자동 응답
+- 없는 주소 : 직접 만든 404 페이지 응답
+
+Express 정적 파일 예제를 실행합니다.
+
+```powershell
+cd C:\dev\node2026\04-express-static
+npm install
+node server.js
+```
+
+브라우저에서 `http://localhost:4300`을 엽니다.
+
+## 5단계 목표
+
+정적 파일로 제공된 브라우저 JavaScript에서 Express API를 호출합니다.
+
+- `/` : `public/index.html` 자동 응답
+- `/api/messages` : `data/messages.json`을 읽어서 JSON 응답
+- `/api/messages/1` : 특정 메시지 하나 응답
+- `/health` : 서버 상태 JSON 응답
+- 브라우저 `fetch()` : API 응답을 받아 화면에 메시지 목록 표시
+
+Express fetch API 예제를 실행합니다.
+
+```powershell
+cd C:\dev\node2026\05-express-fetch-api
+npm install
+node server.js
+```
+
+브라우저에서 `http://localhost:4400`을 엽니다.

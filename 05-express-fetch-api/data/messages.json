@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "author": "Jin",
+    "title": "정적 파일",
+    "body": "Express가 index.html, style.css, app.js를 public 폴더에서 찾아서 보내줍니다."
+  },
+  {
+    "id": 2,
+    "author": "Mina",
+    "title": "API 라우트",
+    "body": "app.get('/api/messages')는 JSON 데이터를 응답하는 서버 코드입니다."
+  },
+  {
+    "id": 3,
+    "author": "Hyun",
+    "title": "fetch",
+    "body": "브라우저의 app.js는 fetch('/api/messages')로 서버 API를 호출하고 결과를 화면에 표시합니다."
+  }
+]

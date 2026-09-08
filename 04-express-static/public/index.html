@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Express 정적 파일 제공</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav">
+        <a class="brand" href="/">Express Static</a>
+        <div class="nav-links" aria-label="주요 링크">
+          <a href="/">홈</a>
+          <a href="/about.html">소개</a>
+          <a href="/health">상태 API</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="layout">
+      <section class="intro">
+        <div>
+          <p class="eyebrow">04 Express</p>
+          <h1>public 폴더를 그대로 웹에 열어봅니다.</h1>
+          <p>
+            HTML, CSS, JavaScript, 이미지 파일을 각각 라우트로 만들지 않아도
+            Express가 정적 파일로 찾아서 보내줍니다.
+          </p>
+        </div>
+        <img class="flow-image" src="/assets/static-flow.svg" alt="브라우저가 Express를 거쳐 public 폴더의 파일을 받는 흐름">
+      </section>
+
+      <section class="panel-grid" aria-label="정적 파일 예시">
+        <article class="panel">
+          <span class="label">HTML</span>
+          <h2>index.html</h2>
+          <p>브라우저가 `/`로 요청하면 `public/index.html`이 응답됩니다.</p>
+        </article>
+        <article class="panel">
+          <span class="label">CSS</span>
+          <h2>style.css</h2>
+          <p>이 화면의 색, 간격, 레이아웃은 CSS 파일에서 가져옵니다.</p>
+        </article>
+        <article class="panel">
+          <span class="label">JS</span>
+          <h2>app.js</h2>
+          <p>아래 버튼의 카운터와 테마 변경은 브라우저 JavaScript가 처리합니다.</p>
+        </article>
+      </section>
+
+      <section class="demo">
+        <div>
+          <h2>브라우저 JavaScript 확인</h2>
+          <p id="statusText">아직 버튼을 누르지 않았습니다.</p>
+        </div>
+        <div class="actions">
+          <button id="countButton" type="button">카운트 올리기</button>
+          <button id="themeButton" class="secondary" type="button">테마 바꾸기</button>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
