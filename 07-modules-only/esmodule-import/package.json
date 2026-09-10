@@ -1,0 +1,12 @@
+{
+  "name": "node2026-esmodule-import",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Simple Node.js ES Module import/export example",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  }
+}
+

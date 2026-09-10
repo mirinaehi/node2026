@@ -27,6 +27,9 @@
   utils/       JSON 파일 읽기 공통 함수
   public/      fetch()로 API를 호출하는 정적 프론트 파일
   server.js    import/export로 조립한 Express 서버
+07-modules-only/
+  commonjs-require/  Node 기본 require/module.exports 예제
+  esmodule-import/   Node ES Module import/export 예제
 ```
 
 ## 1단계 목표
@@ -179,3 +182,25 @@ node server.js
 ```
 
 브라우저에서 `http://localhost:4500`을 엽니다.
+
+## 7단계 목표
+
+다른 기능을 섞지 않고 모듈 처리만 봅니다.
+
+- `commonjs-require` : Node.js의 `require()`와 `module.exports`
+- `esmodule-import` : Node.js의 `import`와 `export`
+- 함수 하나, 여러 함수 묶음, 객체 하나를 각각 모듈로 분리
+
+CommonJS require 예제를 실행합니다.
+
+```powershell
+cd C:\dev\node2026\07-modules-only\commonjs-require
+node app.js
+```
+
+ES Module import 예제를 실행합니다.
+
+```powershell
+cd C:\dev\node2026\07-modules-only\esmodule-import
+node app.js
+```
