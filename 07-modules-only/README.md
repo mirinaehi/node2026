@@ -35,7 +35,7 @@ node app.js
 
 - `greeting.js`는 함수 하나를 `module.exports`로 내보냅니다.
 - `calculator.js`는 여러 함수를 객체로 묶어 `module.exports`로 내보냅니다.
-- `userProfile.js`는 프로필 객체, 기본 프로필, 프로필 배열, 조회 함수를 묶어 `module.exports`로 내보냅니다.
+- `userProfile.js`는 멤버 함수를 가진 프로필 객체, 기본 프로필, 프로필 배열, 조회 함수를 묶어 `module.exports`로 내보냅니다.
 - `app.js`는 `require()` 결과에서 필요한 값과 함수만 구조 분해합니다.
 
 ## 2. ES Module import 예제
@@ -50,7 +50,7 @@ node app.js
 - `package.json`에 `"type": "module"`이 있습니다.
 - `greeting.js`는 함수 하나를 `export default`로 내보냅니다.
 - `calculator.js`는 여러 함수를 `export function`으로 내보냅니다.
-- `userProfile.js`는 큰 객체를 만든 뒤 기본값, 배열, 조회 함수를 각각 `export`로 내보냅니다.
+- `userProfile.js`는 멤버 함수를 가진 큰 객체를 만든 뒤 기본값, 배열, 조회 함수를 각각 `export`로 내보냅니다.
 - `app.js`는 `import { ... }`로 필요한 값과 함수만 가져와 사용합니다.
 
 ## 비교 포인트
@@ -62,7 +62,6 @@ const createGreeting = require("./greeting");
 const { add, multiply } = require("./calculator");
 const {
   DEFAULT_USER_PROFILE,
-  introduce,
   resolveUserProfile,
   userProfiles,
 } = require("./userProfile");
@@ -75,7 +74,6 @@ import createGreeting from "./greeting.js";
 import { add, multiply } from "./calculator.js";
 import {
   DEFAULT_USER_PROFILE,
-  introduce,
   resolveUserProfile,
   userProfiles,
 } from "./userProfile.js";
@@ -95,6 +93,9 @@ export const USER_PROFILES = {
   jin: {
     id: "jin",
     name: "Jin",
+    introduce() {
+      return `${this.name}님입니다.`;
+    },
   },
 };
 
@@ -112,3 +113,12 @@ import {
   resolveUserProfile,
 } from "./userProfile.js";
 ```
+
+가져온 값이 객체라면 객체 안의 멤버 함수는 점 표기법으로 호출합니다.
+
+```js
+console.log(DEFAULT_USER_PROFILE.introduce());
+console.log(resolveUserProfile("mina").introduce());
+```
+
+멤버 함수가 `this`를 사용한다면 함수만 따로 떼어내기보다 객체를 통해 호출하는 편이 안전합니다.
