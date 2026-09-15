@@ -30,6 +30,9 @@
 07-modules-only/
   commonjs-require/  Node 기본 require/module.exports 예제
   esmodule-import/   Node ES Module import/export 예제
+08-express-post-json/
+  public/      GET과 POST fetch를 실행하는 정적 프론트 파일
+  server.js    express.json()과 POST 요청 처리 예제
 ```
 
 ## 1단계 목표
@@ -204,3 +207,23 @@ ES Module import 예제를 실행합니다.
 cd C:\dev\node2026\07-modules-only\esmodule-import
 node app.js
 ```
+
+## 8단계 목표
+
+브라우저에서 JSON 데이터를 서버로 보내고, Express에서 `req.body`로 읽습니다.
+
+- `express.json()` : JSON 요청 본문을 `req.body`로 바꿔줌
+- `GET /api/messages` : 메모리 배열의 메시지 목록 조회
+- `POST /api/messages` : 브라우저가 보낸 JSON으로 새 메시지 추가
+- 간단한 유효성 검사 : 제목과 내용이 없으면 400 응답
+- 서버 메모리 저장 : 서버를 재시작하면 추가한 메시지는 사라짐
+
+Express POST JSON 예제를 실행합니다.
+
+```powershell
+cd C:\dev\node2026\08-express-post-json
+npm install
+node server.js
+```
+
+브라우저에서 `http://localhost:4700`을 엽니다.

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Express POST JSON</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <nav class="nav">
+        <a class="brand" href="/">Express POST JSON</a>
+        <a class="api-link" href="/api/messages">/api/messages</a>
+      </nav>
+    </header>
+
+    <main class="page">
+      <section class="hero">
+        <p class="eyebrow">08 Express</p>
+        <h1>브라우저에서 서버로 JSON을 보냅니다.</h1>
+        <p>
+          `POST /api/messages` 요청으로 새 메시지를 보내고,
+          Express는 `express.json()` 덕분에 그 값을 `req.body`로 읽습니다.
+        </p>
+      </section>
+
+      <section class="form-panel">
+        <form id="messageForm">
+          <label>
+            제목
+            <input id="titleInput" name="title" type="text" autocomplete="off" placeholder="예: req.body">
+          </label>
+          <label>
+            내용
+            <textarea id="bodyInput" name="body" rows="4" placeholder="예: 브라우저가 보낸 JSON 데이터입니다."></textarea>
+          </label>
+          <button type="submit">메시지 추가</button>
+        </form>
+        <p id="statusText" class="status" aria-live="polite">메시지를 불러오는 중입니다.</p>
+      </section>
+
+      <section>
+        <div class="section-title">
+          <h2>메시지 목록</h2>
+          <button id="reloadButton" class="secondary" type="button">다시 불러오기</button>
+        </div>
+        <ul id="messageList" class="message-list" aria-label="서버 메시지 목록"></ul>
+      </section>
+    </main>
+  </body>
+</html>
+
