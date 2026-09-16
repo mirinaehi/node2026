@@ -1,0 +1,11 @@
+{
+  "name": "node2026-esmodule-default-import",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Simple Node.js ES Module default import example",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  }
+}

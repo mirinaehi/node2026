@@ -2,6 +2,7 @@
   "name": "node2026-express-file-read",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "Node.js file read example using Express",
   "main": "server.js",
   "scripts": {

@@ -1,4 +1,4 @@
-const USER_PROFILES = {
+export const USER_PROFILES = {
   jin: {
     id: "jin",
     name: "Jin",
@@ -25,16 +25,9 @@ const USER_PROFILES = {
   },
 };
 
-const DEFAULT_USER_PROFILE = USER_PROFILES.jin;
-const userProfiles = Object.values(USER_PROFILES);
+export const DEFAULT_USER_PROFILE = USER_PROFILES.jin;
+export const userProfiles = Object.values(USER_PROFILES);
 
-function resolveUserProfile(profileId) {
+export function resolveUserProfile(profileId) {
   return USER_PROFILES[profileId] ?? DEFAULT_USER_PROFILE;
 }
-
-module.exports = {
-  USER_PROFILES,
-  DEFAULT_USER_PROFILE,
-  userProfiles,
-  resolveUserProfile,
-};

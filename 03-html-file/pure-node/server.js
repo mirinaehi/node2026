@@ -1,6 +1,10 @@
-const http = require("http");
-const path = require("path");
-const { readFile } = require("fs/promises");
+import http from "http";
+import path from "path";
+import { readFile } from "fs/promises";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const PORT = 3200;
 const PUBLIC_DIR = path.join(__dirname, "public");
@@ -38,4 +42,3 @@ const server = http.createServer(async (req, res) => {
 server.listen(PORT, () => {
   console.log(`Pure Node HTML file server: http://localhost:${PORT}`);
 });
-

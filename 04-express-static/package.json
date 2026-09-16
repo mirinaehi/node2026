@@ -2,6 +2,7 @@
   "name": "node2026-express-static",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "Express static file serving example",
   "main": "server.js",
   "scripts": {

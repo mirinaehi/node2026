@@ -2,6 +2,7 @@
   "name": "node2026-express-post-json",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "Express POST JSON example using express.json and req.body",
   "main": "server.js",
   "scripts": {
@@ -11,4 +12,3 @@
     "express": "^5.2.1"
   }
 }
-

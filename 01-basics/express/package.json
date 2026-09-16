@@ -2,6 +2,7 @@
   "name": "node2026-express-basics",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "Node.js basics example using Express",
   "main": "server.js",
   "scripts": {
@@ -11,4 +12,3 @@
     "express": "^4.18.2"
   }
 }
-

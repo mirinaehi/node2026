@@ -1,0 +1,11 @@
+{
+  "name": "node2026-pure-node-html-file",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Node.js HTML file example using ES modules",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

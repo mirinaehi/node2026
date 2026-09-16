@@ -4,14 +4,15 @@
 
 목표는 두 가지입니다.
 
-- Node.js 기본 `require()`와 `module.exports` 이해하기
-- Node.js ES Module의 `import`와 `export` 이해하기
+- ES Module의 `default export`와 `default import` 이해하기
+- ES Module의 `named export`와 `named import` 이해하기
 
 ## 폴더 구성
 
 ```text
 07-modules-only/
-  commonjs-require/
+  esmodule-default-import/
+    package.json
     app.js
     greeting.js
     calculator.js
@@ -24,19 +25,19 @@
     userProfile.js
 ```
 
-## 1. CommonJS require 예제
+## 1. ES Module default import 예제
 
 ```powershell
-cd C:\dev\node2026\07-modules-only\commonjs-require
+cd C:\dev\node2026\07-modules-only\esmodule-default-import
 node app.js
 ```
 
 관찰할 코드:
 
-- `greeting.js`는 함수 하나를 `module.exports`로 내보냅니다.
-- `calculator.js`는 여러 함수를 객체로 묶어 `module.exports`로 내보냅니다.
-- `userProfile.js`는 멤버 함수를 가진 프로필 객체, 기본 프로필, 프로필 배열, 조회 함수를 묶어 `module.exports`로 내보냅니다.
-- `app.js`는 `require()` 결과에서 필요한 값과 함수만 구조 분해합니다.
+- `greeting.js`는 함수 하나를 `export default`로 내보냅니다.
+- `calculator.js`는 여러 함수를 객체로 묶어 `export default`로 내보냅니다.
+- `app.js`는 기본값을 원하는 이름으로 가져옵니다.
+- `userProfile.js`는 named export도 함께 보여줍니다.
 
 ## 2. ES Module import 예제
 
@@ -55,16 +56,11 @@ node app.js
 
 ## 비교 포인트
 
-CommonJS 방식:
+Default import 방식:
 
 ```js
-const createGreeting = require("./greeting");
-const { add, multiply } = require("./calculator");
-const {
-  DEFAULT_USER_PROFILE,
-  resolveUserProfile,
-  userProfiles,
-} = require("./userProfile");
+import createGreeting from "./greeting.js";
+import calculator from "./calculator.js";
 ```
 
 ES Module 방식:
@@ -81,7 +77,6 @@ import {
 
 처음에는 이 차이만 보면 충분합니다.
 
-- CommonJS는 Node.js에서 오래 쓰인 방식입니다.
 - ES Module은 최신 JavaScript 표준 방식입니다.
 - ES Module에서는 로컬 파일을 import할 때 `.js` 확장자를 붙이는 습관을 들이면 좋습니다.
 - 큰 객체를 만들고, 그 객체에서 파생된 값이나 함수만 골라 가져오면 코드의 의도가 더 분명해집니다.

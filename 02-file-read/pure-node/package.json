@@ -1,0 +1,11 @@
+{
+  "name": "node2026-pure-node-file-read",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Node.js file read example using ES modules",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
