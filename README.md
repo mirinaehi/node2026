@@ -33,6 +33,8 @@
 08-express-post-json/
   public/      GET과 POST fetch를 실행하는 정적 프론트 파일
   server.js    express.json()과 POST 요청 처리 예제
+09-express-routing-only/
+  server.js    Express 라우팅만 다루는 단순 예제
 ```
 
 ## 1단계 목표
@@ -227,3 +229,25 @@ node server.js
 ```
 
 브라우저에서 `http://localhost:4700`을 엽니다.
+
+## 9단계 목표
+
+다른 구조를 섞지 않고 Express 라우팅만 봅니다.
+
+- `app.get("/")` : 기본 경로
+- `app.get("/hello")` : 고정 경로
+- `app.get("/hello/:name")` : 경로 파라미터
+- `app.get("/users")` : 목록 라우트
+- `app.get("/users/:id")` : ID 파라미터 라우트
+- `app.get("/search?keyword=node")` : 쿼리스트링
+- `app.use(...)` : 마지막 404 처리
+
+Express 라우팅 전용 예제를 실행합니다.
+
+```powershell
+cd C:\dev\node2026\09-express-routing-only
+npm install
+node server.js
+```
+
+브라우저에서 `http://localhost:4800`을 엽니다.
