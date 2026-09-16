@@ -1,0 +1,15 @@
+{
+  "name": "node2026-express-router",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Simple Express Router example",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
+

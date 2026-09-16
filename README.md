@@ -35,6 +35,9 @@
   server.js    express.json()과 POST 요청 처리 예제
 09-express-routing-only/
   server.js    Express 라우팅만 다루는 단순 예제
+10-express-router/
+  routes/      Express Router로 분리한 라우트 묶음
+  server.js    라우터를 연결하는 Express 서버
 ```
 
 ## 1단계 목표
@@ -251,3 +254,23 @@ node server.js
 ```
 
 브라우저에서 `http://localhost:4800`을 엽니다.
+
+## 10단계 목표
+
+`express.Router()`로 관련 라우트를 파일 단위로 묶습니다.
+
+- `server.js` : `/users`, `/products` 라우터 연결
+- `routes/users.js` : 사용자 관련 라우트 묶음
+- `routes/products.js` : 상품 관련 라우트 묶음
+- `router.get("/")` : 라우터의 기준 경로
+- `router.get("/:id")` : 라우터 안의 경로 파라미터
+
+Express Router 예제를 실행합니다.
+
+```powershell
+cd C:\dev\node2026\10-express-router
+npm install
+node server.js
+```
+
+브라우저에서 `http://localhost:4900`을 엽니다.
