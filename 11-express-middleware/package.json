@@ -1,0 +1,14 @@
+{
+  "name": "node2026-express-middleware",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Simple Express middleware example",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}

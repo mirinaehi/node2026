@@ -38,6 +38,8 @@
 10-express-router/
   routes/      Express Router로 분리한 라우트 묶음
   server.js    라우터를 연결하는 Express 서버
+11-express-middleware/
+  server.js    Express 미들웨어 흐름 예제
 ```
 
 ## 1단계 목표
@@ -274,3 +276,25 @@ node server.js
 ```
 
 브라우저에서 `http://localhost:4900`을 엽니다.
+
+## 11단계 목표
+
+Express 미들웨어가 요청과 라우트 사이에서 어떻게 실행되는지 봅니다.
+
+- `app.use(requestLogger)` : 모든 요청을 콘솔에 기록
+- `app.use(addRequestTime)` : 모든 요청에 `req.requestTime` 추가
+- `app.get("/admin", requireApiKey, ...)` : 특정 라우트에만 미들웨어 적용
+- `next()` : 다음 미들웨어나 라우트로 요청 넘기기
+- 401 응답 : 조건을 통과하지 못한 요청을 중간에서 종료
+
+Express Middleware 예제를 실행합니다.
+
+```powershell
+cd C:\dev\node2026\11-express-middleware
+npm install
+node server.js
+```
+
+브라우저에서 `http://localhost:5000/public`을 엽니다.
+
+그 다음 `http://localhost:5000/admin`과 `http://localhost:5000/admin?apiKey=secret`의 차이를 비교합니다.
