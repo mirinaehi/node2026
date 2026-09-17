@@ -1,4 +1,5 @@
 import express from "express";
+import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -8,34 +9,32 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = 4700;
 const PUBLIC_DIR = path.join(__dirname, "public");
+const MESSAGES_FILE = path.join(__dirname, "data", "messages.json");
 
-let nextMessageId = 4;
-const messages = [
-  {
-    id: 1,
-    title: "GET 요청",
-    body: "GET /api/messages는 서버에 있는 메시지 목록을 가져옵니다.",
-  },
-  {
-    id: 2,
-    title: "POST 요청",
-    body: "POST /api/messages는 브라우저가 서버로 새 메시지를 보냅니다.",
-  },
-  {
-    id: 3,
-    title: "express.json()",
-    body: "express.json()이 JSON 요청 본문을 req.body로 읽을 수 있게 해줍니다.",
-  },
-];
+async function readMessages() {
+  const fileContent = await fs.readFile(MESSAGES_FILE, "utf8");
+  return JSON.parse(fileContent);
+}
+
+async function writeMessages(messages) {
+  const fileContent = JSON.stringify(messages, null, 2);
+  await fs.writeFile(MESSAGES_FILE, `${fileContent}\n`, "utf8");
+}
+
+function getNextMessageId(messages) {
+  const ids = messages.map((message) => message.id);
+  return Math.max(0, ...ids) + 1;
+}
 
 app.use(express.static(PUBLIC_DIR));
 app.use(express.json());
 
-app.get("/api/messages", (req, res) => {
+app.get("/api/messages", async (req, res) => {
+  const messages = await readMessages();
   res.json(messages);
 });
 
-app.post("/api/messages", (req, res) => {
+app.post("/api/messages", async (req, res) => {
   const { title, body } = req.body;
 
   if (!title || !body) {
@@ -45,19 +44,22 @@ app.post("/api/messages", (req, res) => {
     return;
   }
 
+  const messages = await readMessages();
   const newMessage = {
-    id: nextMessageId,
+    id: getNextMessageId(messages),
     title,
     body,
   };
 
-  nextMessageId += 1;
   messages.push(newMessage);
+  await writeMessages(messages);
 
   res.status(201).json(newMessage);
 });
 
-app.get("/health", (req, res) => {
+app.get("/health", async (req, res) => {
+  const messages = await readMessages();
+
   res.json({
     ok: true,
     example: "express-post-json",
@@ -72,7 +74,7 @@ app.use((req, res) => {
 });
 
 app.use((error, req, res, next) => {
-  if (error instanceof SyntaxError) {
+  if (error.type === "entity.parse.failed") {
     res.status(400).json({
       message: "요청 JSON 형식이 올바르지 않습니다.",
     });

@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "title": "GET 요청",
+    "body": "GET /api/messages는 서버에 있는 메시지 목록을 가져옵니다."
+  },
+  {
+    "id": 2,
+    "title": "POST 요청",
+    "body": "POST /api/messages는 브라우저가 서버로 새 메시지를 보냅니다."
+  },
+  {
+    "id": 3,
+    "title": "express.json()",
+    "body": "express.json()이 JSON 요청 본문을 req.body로 읽을 수 있게 해줍니다."
+  }
+]

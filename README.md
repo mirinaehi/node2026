@@ -31,6 +31,7 @@
   esmodule-default-import/ Node ES Module default import 예제
   esmodule-import/   Node ES Module import/export 예제
 08-express-post-json/
+  data/        POST로 추가한 메시지를 저장하는 JSON 파일
   public/      GET과 POST fetch를 실행하는 정적 프론트 파일
   server.js    express.json()과 POST 요청 처리 예제
 09-express-routing-only/
@@ -220,10 +221,10 @@ node app.js
 브라우저에서 JSON 데이터를 서버로 보내고, Express에서 `req.body`로 읽습니다.
 
 - `express.json()` : JSON 요청 본문을 `req.body`로 바꿔줌
-- `GET /api/messages` : 메모리 배열의 메시지 목록 조회
-- `POST /api/messages` : 브라우저가 보낸 JSON으로 새 메시지 추가
+- `GET /api/messages` : JSON 파일의 메시지 목록 조회
+- `POST /api/messages` : 브라우저가 보낸 JSON으로 새 메시지 추가 후 파일 저장
 - 간단한 유효성 검사 : 제목과 내용이 없으면 400 응답
-- 서버 메모리 저장 : 서버를 재시작하면 추가한 메시지는 사라짐
+- 파일 저장 : 서버를 재시작해도 추가한 메시지가 `data/messages.json`에 남음
 
 Express POST JSON 예제를 실행합니다.
 
