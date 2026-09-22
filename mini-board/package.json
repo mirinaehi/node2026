@@ -1,0 +1,13 @@
+{
+  "name": "mini-board",
+  "version": "0.1.0",
+  "description": "Node.js를 단계별로 익히기 위한 누적형 미니 게시판 예제",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
