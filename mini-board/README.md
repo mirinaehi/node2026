@@ -10,6 +10,14 @@ Node 기본 `http` 모듈로 서버를 만들고, 브라우저 요청에 따라 
 - `/health` : 서버 상태를 JSON으로 응답
 - 그 외 주소 : 404 응답
 
+## 2단계 목표
+
+Node의 파일 읽기 기능으로 JSON 파일을 읽고, 게시글 목록과 상세 데이터를 응답합니다.
+
+- `data/posts.json` : 게시글 데이터 파일
+- `/posts` : JSON 파일에 있는 게시글 목록 응답
+- `/posts/1` : JSON 파일에서 특정 게시글 하나를 찾아 응답
+
 ## 실행
 
 ```powershell
@@ -22,5 +30,7 @@ npm start
 ```text
 http://localhost:3000
 http://localhost:3000/health
+http://localhost:3000/posts
+http://localhost:3000/posts/1
 http://localhost:3000/not-found
 ```

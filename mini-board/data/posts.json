@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "title": "첫 번째 게시글",
+    "content": "Mini Board 프로젝트에서 JSON 파일로 읽어 온 첫 게시글입니다.",
+    "author": "관리자"
+  },
+  {
+    "id": 2,
+    "title": "Node 서버 연습",
+    "content": "서버가 data/posts.json 파일을 읽고 브라우저에 JSON으로 응답합니다.",
+    "author": "학습자"
+  }
+]
