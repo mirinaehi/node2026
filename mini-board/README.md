@@ -27,6 +27,15 @@ HTML 파일을 서버에서 읽어서 브라우저에 보여줍니다.
 - `/` : 문자열 대신 HTML 파일 응답
 - 없는 주소 : 404 상태 코드와 HTML 파일 응답
 
+## 4단계 목표
+
+HTML에서 연결한 CSS와 브라우저 JavaScript 파일을 정적 파일로 제공합니다.
+
+- `public/style.css` : 첫 화면에 적용할 스타일 파일
+- `public/app.js` : 브라우저에서 실행할 JavaScript 파일
+- `/static/style.css` : CSS 정적 파일 응답
+- `/static/app.js` : JavaScript 정적 파일 응답
+
 ## 실행
 
 ```powershell
@@ -39,6 +48,8 @@ npm start
 ```text
 http://localhost:3000
 http://localhost:3000/health
+http://localhost:3000/static/style.css
+http://localhost:3000/static/app.js
 http://localhost:3000/posts
 http://localhost:3000/posts/1
 http://localhost:3000/not-found
