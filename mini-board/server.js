@@ -3,6 +3,8 @@ import { readFile } from "node:fs/promises";
 
 const PORT = 3000;
 const postsFilePath = new URL("./data/posts.json", import.meta.url);
+const indexFilePath = new URL("./public/index.html", import.meta.url);
+const notFoundFilePath = new URL("./public/404.html", import.meta.url);
 
 async function readPosts() {
   const fileContents = await readFile(postsFilePath, "utf-8");
@@ -19,13 +21,24 @@ function sendJson(res, statusCode, data) {
   res.end(JSON.stringify(data));
 }
 
+async function sendHtmlFile(res, statusCode, filePath) {
+  const html = await readFile(filePath, "utf-8");
+  res.writeHead(statusCode, { "Content-Type": "text/html; charset=utf-8" });
+  res.end(html);
+}
+
 const server = http.createServer(async (req, res) => {
   const requestUrl = new URL(req.url, `http://${req.headers.host}`);
 
   console.log(`${req.method} ${requestUrl.pathname}`);
 
   if (requestUrl.pathname === "/") {
-    sendText(res, 200, "Mini Board 서버가 요청을 받고 응답했습니다.");
+    try {
+      await sendHtmlFile(res, 200, indexFilePath);
+    } catch (error) {
+      console.error(error);
+      sendText(res, 500, "첫 화면 HTML 파일을 읽을 수 없습니다.");
+    }
     return;
   }
 
@@ -33,7 +46,7 @@ const server = http.createServer(async (req, res) => {
     sendJson(res, 200, {
       status: "ok",
       project: "mini-board",
-      step: 2
+      step: 3
     });
     return;
   }
@@ -68,7 +81,12 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
-  sendText(res, 404, "요청한 주소를 찾을 수 없습니다.");
+  try {
+    await sendHtmlFile(res, 404, notFoundFilePath);
+  } catch (error) {
+    console.error(error);
+    sendText(res, 404, "요청한 주소를 찾을 수 없습니다.");
+  }
 });
 
 server.listen(PORT, () => {
