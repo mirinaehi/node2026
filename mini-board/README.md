@@ -56,6 +56,17 @@ Node 기본 `http` 모듈로 직접 처리하던 서버를 Express로 리팩터�
 - DOM 조작 : 받은 게시글 목록을 HTML 요소로 렌더링
 - 실패 처리 : API 호출 실패 시 화면에 안내 문구 표시
 
+## 7단계 목표
+
+Express 코드를 역할별 파일로 나누고 `import`/`export`로 연결합니다.
+
+- `server.js` : 서버 실행 시작
+- `src/app.js` : Express 앱 생성과 라우트 조립
+- `src/config/paths.js` : 프로젝트에서 사용하는 파일 경로 관리
+- `src/data/postsFile.js` : 게시글 JSON 파일 읽기와 게시글 찾기
+- `export` : 다른 파일에서 사용할 값과 함수 공개
+- `import` : 공개된 값과 함수를 필요한 파일에서 가져오기
+
 ## 실행
 
 ```powershell
