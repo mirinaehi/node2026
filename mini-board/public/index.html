@@ -28,6 +28,29 @@
       </section>
 
       <section>
+        <h2>게시글 작성</h2>
+        <form id="post-form" class="post-form">
+          <label>
+            제목
+            <input id="post-title" name="title" type="text" required>
+          </label>
+
+          <label>
+            내용
+            <textarea id="post-content" name="content" rows="4" required></textarea>
+          </label>
+
+          <label>
+            작성자
+            <input id="post-author" name="author" type="text" placeholder="익명">
+          </label>
+
+          <button type="submit">게시글 저장</button>
+        </form>
+        <p id="form-message" class="form-message"></p>
+      </section>
+
+      <section>
         <h2>게시글 목록</h2>
         <p id="posts-status">게시글을 불러오는 중입니다.</p>
         <ul id="posts-list" class="posts-list"></ul>

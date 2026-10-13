@@ -67,6 +67,16 @@ Express 코드를 역할별 파일로 나누고 `import`/`export`로 연결합�
 - `export` : 다른 파일에서 사용할 값과 함수 공개
 - `import` : 공개된 값과 함수를 필요한 파일에서 가져오기
 
+## 8단계 목표
+
+브라우저에서 작성한 데이터를 서버로 보내고 JSON 파일에 저장합니다.
+
+- `express.json()` : JSON 요청 본문을 `req.body`로 변환
+- `POST /posts` : 새 게시글 생성 요청 처리
+- `writeFile()` : 변경된 게시글 목록을 `data/posts.json`에 저장
+- `fetch()` POST 요청 : 브라우저 폼 데이터를 서버에 JSON으로 전송
+- 저장 후 목록 새로고침 : 새 게시글이 화면에 바로 보이도록 처리
+
 ## 실행
 
 ```powershell

@@ -1,4 +1,6 @@
 const staticMessage = document.querySelector("#static-message");
+const postForm = document.querySelector("#post-form");
+const formMessage = document.querySelector("#form-message");
 const postsStatus = document.querySelector("#posts-status");
 const postsList = document.querySelector("#posts-list");
 
@@ -47,4 +49,46 @@ async function loadPosts() {
 
 if (postsStatus && postsList) {
   loadPosts();
+}
+
+async function createPost(formData) {
+  const postData = {
+    title: formData.get("title"),
+    content: formData.get("content"),
+    author: formData.get("author")
+  };
+
+  // 브라우저가 JSON 문자열을 서버로 보내면 express.json()이 req.body로 바꿔 줍니다.
+  const response = await fetch("/posts", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(postData)
+  });
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.message || "게시글 저장에 실패했습니다.");
+  }
+
+  return result;
+}
+
+if (postForm && formMessage) {
+  postForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    formMessage.textContent = "게시글을 저장하는 중입니다.";
+
+    try {
+      await createPost(new FormData(postForm));
+      postForm.reset();
+      formMessage.textContent = "게시글을 저장했습니다.";
+      await loadPosts();
+    } catch (error) {
+      console.error(error);
+      formMessage.textContent = error.message;
+    }
+  });
 }
