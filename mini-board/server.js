@@ -30,7 +30,7 @@ app.get("/health", (req, res) => {
   res.json({
     status: "ok",
     project: "mini-board",
-    step: 5
+    step: 6
   });
 });
 

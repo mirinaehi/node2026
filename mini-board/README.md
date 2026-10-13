@@ -47,6 +47,15 @@ Node 기본 `http` 모듈로 직접 처리하던 서버를 Express로 리팩터�
 - `express.static()` : 정적 파일 응답 처리
 - `app.use()` : 마지막 404 처리
 
+## 6단계 목표
+
+브라우저 JavaScript에서 서버 API를 호출하고, 받은 JSON 데이터를 화면에 표시합니다.
+
+- `fetch("/posts")` : 브라우저에서 게시글 목록 API 호출
+- `response.json()` : API 응답 본문을 JavaScript 데이터로 변환
+- DOM 조작 : 받은 게시글 목록을 HTML 요소로 렌더링
+- 실패 처리 : API 호출 실패 시 화면에 안내 문구 표시
+
 ## 실행
 
 ```powershell

@@ -28,3 +28,29 @@ a {
   background: #e8f0fe;
   border-left: 4px solid #0b57d0;
 }
+
+.posts-list {
+  display: grid;
+  gap: 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.post-item {
+  padding: 16px;
+  border: 1px solid #d7dee8;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.post-item h3 {
+  margin: 0 0 8px;
+}
+
+.post-item p {
+  margin: 0 0 10px;
+}
+
+.post-item small {
+  color: #5f6368;
+}
