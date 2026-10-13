@@ -36,10 +36,22 @@ HTML에서 연결한 CSS와 브라우저 JavaScript 파일을 정적 파일로 �
 - `/static/style.css` : CSS 정적 파일 응답
 - `/static/app.js` : JavaScript 정적 파일 응답
 
+## 5단계 목표
+
+Node 기본 `http` 모듈로 직접 처리하던 서버를 Express로 리팩터링합니다.
+
+- `express()` : Express 앱 생성
+- `app.get()` : 경로별 요청 처리
+- `res.json()` : JSON 응답 처리
+- `res.sendFile()` : HTML 파일 응답 처리
+- `express.static()` : 정적 파일 응답 처리
+- `app.use()` : 마지막 404 처리
+
 ## 실행
 
 ```powershell
 cd C:\dev\node2026\mini-board
+npm install
 npm start
 ```
 

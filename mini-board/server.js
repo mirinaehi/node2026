@@ -1,136 +1,72 @@
-import http from "node:http";
+import express from "express";
 import { readFile } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const app = express();
 const PORT = 3000;
-const postsFilePath = new URL("./data/posts.json", import.meta.url);
-const indexFilePath = new URL("./public/index.html", import.meta.url);
-const notFoundFilePath = new URL("./public/404.html", import.meta.url);
-const publicDirectoryPath = new URL("./public/", import.meta.url);
-
-// 브라우저가 파일 종류를 알 수 있도록 확장자별 Content-Type을 지정합니다.
-const contentTypes = {
-  ".css": "text/css; charset=utf-8",
-  ".js": "text/javascript; charset=utf-8",
-  ".html": "text/html; charset=utf-8",
-  ".json": "application/json; charset=utf-8",
-  ".png": "image/png",
-  ".jpg": "image/jpeg",
-  ".jpeg": "image/jpeg",
-  ".svg": "image/svg+xml; charset=utf-8"
-};
+const postsFilePath = path.join(__dirname, "data", "posts.json");
+const publicDirectoryPath = path.join(__dirname, "public");
+const indexFilePath = path.join(publicDirectoryPath, "index.html");
+const notFoundFilePath = path.join(publicDirectoryPath, "404.html");
 
 async function readPosts() {
   const fileContents = await readFile(postsFilePath, "utf-8");
   return JSON.parse(fileContents);
 }
 
-function sendText(res, statusCode, message) {
-  res.writeHead(statusCode, { "Content-Type": "text/plain; charset=utf-8" });
-  res.end(message);
-}
+// express.static이 public 폴더의 CSS, JS 같은 정적 파일 응답을 대신 처리합니다.
+app.use("/static", express.static(publicDirectoryPath));
 
-function sendJson(res, statusCode, data) {
-  res.writeHead(statusCode, { "Content-Type": "application/json; charset=utf-8" });
-  res.end(JSON.stringify(data));
-}
+app.get("/", (req, res) => {
+  res.sendFile(indexFilePath);
+});
 
-async function sendHtmlFile(res, statusCode, filePath) {
-  const html = await readFile(filePath, "utf-8");
-  res.writeHead(statusCode, { "Content-Type": "text/html; charset=utf-8" });
-  res.end(html);
-}
+app.get("/health", (req, res) => {
+  // res.json은 객체를 JSON 문자열로 바꾸고 Content-Type도 자동으로 설정합니다.
+  res.json({
+    status: "ok",
+    project: "mini-board",
+    step: 5
+  });
+});
 
-// public 폴더 안의 CSS, JS 같은 정적 파일을 읽어서 그대로 응답합니다.
-async function sendStaticFile(res, filePath) {
-  const fileContents = await readFile(filePath);
-  const extension = filePath.pathname.slice(filePath.pathname.lastIndexOf("."));
-  const contentType = contentTypes[extension] || "application/octet-stream";
-
-  res.writeHead(200, { "Content-Type": contentType });
-  res.end(fileContents);
-}
-
-const server = http.createServer(async (req, res) => {
-  const requestUrl = new URL(req.url, `http://${req.headers.host}`);
-
-  console.log(`${req.method} ${requestUrl.pathname}`);
-
-  if (requestUrl.pathname === "/") {
-    try {
-      await sendHtmlFile(res, 200, indexFilePath);
-    } catch (error) {
-      console.error(error);
-      sendText(res, 500, "첫 화면 HTML 파일을 읽을 수 없습니다.");
-    }
-    return;
-  }
-
-  if (requestUrl.pathname === "/health") {
-    sendJson(res, 200, {
-      status: "ok",
-      project: "mini-board",
-      step: 4
-    });
-    return;
-  }
-
-  if (requestUrl.pathname.startsWith("/static/")) {
-    try {
-      const staticFileName = requestUrl.pathname.replace("/static/", "");
-      const staticFilePath = new URL(staticFileName, publicDirectoryPath);
-
-      // /static/../server.js 같은 요청이 public 폴더 밖 파일을 읽지 못하게 막습니다.
-      if (!staticFilePath.href.startsWith(publicDirectoryPath.href)) {
-        sendText(res, 400, "잘못된 정적 파일 경로입니다.");
-        return;
-      }
-
-      await sendStaticFile(res, staticFilePath);
-    } catch (error) {
-      console.error(error);
-      sendText(res, 404, "정적 파일을 찾을 수 없습니다.");
-    }
-    return;
-  }
-
-  if (requestUrl.pathname === "/posts") {
-    try {
-      const posts = await readPosts();
-      sendJson(res, 200, posts);
-    } catch (error) {
-      console.error(error);
-      sendJson(res, 500, { message: "게시글 파일을 읽을 수 없습니다." });
-    }
-    return;
-  }
-
-  if (requestUrl.pathname.startsWith("/posts/")) {
-    try {
-      const posts = await readPosts();
-      const postId = Number(requestUrl.pathname.replace("/posts/", ""));
-      const post = posts.find((item) => item.id === postId);
-
-      if (!post) {
-        sendJson(res, 404, { message: "게시글을 찾을 수 없습니다." });
-        return;
-      }
-
-      sendJson(res, 200, post);
-    } catch (error) {
-      console.error(error);
-      sendJson(res, 500, { message: "게시글 파일을 읽을 수 없습니다." });
-    }
-    return;
-  }
-
+app.get("/posts", async (req, res) => {
   try {
-    await sendHtmlFile(res, 404, notFoundFilePath);
+    const posts = await readPosts();
+    res.json(posts);
   } catch (error) {
     console.error(error);
-    sendText(res, 404, "요청한 주소를 찾을 수 없습니다.");
+    res.status(500).json({ message: "게시글 파일을 읽을 수 없습니다." });
   }
 });
 
-server.listen(PORT, () => {
+app.get("/posts/:id", async (req, res) => {
+  try {
+    const posts = await readPosts();
+    const postId = Number(req.params.id);
+    const post = posts.find((item) => item.id === postId);
+
+    if (!post) {
+      res.status(404).json({ message: "게시글을 찾을 수 없습니다." });
+      return;
+    }
+
+    res.json(post);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "게시글 파일을 읽을 수 없습니다." });
+  }
+});
+
+// 위 라우트 중 어디에도 걸리지 않은 요청은 마지막 404 처리로 내려옵니다.
+app.use((req, res) => {
+  res.status(404).sendFile(notFoundFilePath);
+});
+
+app.listen(PORT, () => {
   console.log(`Mini Board server is running at http://localhost:${PORT}`);
 });
