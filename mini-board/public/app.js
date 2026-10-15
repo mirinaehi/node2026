@@ -3,6 +3,7 @@ const postForm = document.querySelector("#post-form");
 const formMessage = document.querySelector("#form-message");
 const postsStatus = document.querySelector("#posts-status");
 const postsList = document.querySelector("#posts-list");
+const POSTS_API_URL = "/api/posts";
 
 if (staticMessage) {
   staticMessage.textContent = "CSS와 브라우저 JavaScript 파일이 정적 파일로 제공되었습니다.";
@@ -32,7 +33,7 @@ function renderPosts(posts) {
 async function loadPosts() {
   try {
     // 브라우저에서 서버 API를 호출하고, 응답으로 받은 JSON을 화면 데이터로 사용합니다.
-    const response = await fetch("/posts");
+    const response = await fetch(POSTS_API_URL);
 
     if (!response.ok) {
       throw new Error("게시글 API 요청에 실패했습니다.");
@@ -59,7 +60,7 @@ async function createPost(formData) {
   };
 
   // 브라우저가 JSON 문자열을 서버로 보내면 express.json()이 req.body로 바꿔 줍니다.
-  const response = await fetch("/posts", {
+  const response = await fetch(POSTS_API_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

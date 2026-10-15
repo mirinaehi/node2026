@@ -51,7 +51,7 @@ Node 기본 `http` 모듈로 직접 처리하던 서버를 Express로 리팩터�
 
 브라우저 JavaScript에서 서버 API를 호출하고, 받은 JSON 데이터를 화면에 표시합니다.
 
-- `fetch("/posts")` : 브라우저에서 게시글 목록 API 호출
+- `fetch("/api/posts")` : 브라우저에서 게시글 목록 API 호출
 - `response.json()` : API 응답 본문을 JavaScript 데이터로 변환
 - DOM 조작 : 받은 게시글 목록을 HTML 요소로 렌더링
 - 실패 처리 : API 호출 실패 시 화면에 안내 문구 표시
@@ -72,10 +72,21 @@ Express 코드를 역할별 파일로 나누고 `import`/`export`로 연결합�
 브라우저에서 작성한 데이터를 서버로 보내고 JSON 파일에 저장합니다.
 
 - `express.json()` : JSON 요청 본문을 `req.body`로 변환
-- `POST /posts` : 새 게시글 생성 요청 처리
+- `POST /api/posts` : 새 게시글 생성 요청 처리
 - `writeFile()` : 변경된 게시글 목록을 `data/posts.json`에 저장
 - `fetch()` POST 요청 : 브라우저 폼 데이터를 서버에 JSON으로 전송
 - 저장 후 목록 새로고침 : 새 게시글이 화면에 바로 보이도록 처리
+
+## 9단계 목표
+
+URL을 역할에 맞게 설계합니다.
+
+- `/` : 브라우저가 보는 HTML 화면
+- `/static/...` : CSS와 브라우저 JavaScript 같은 정적 파일
+- `/api/health` : 서버 상태 JSON API
+- `/api/posts` : 게시글 목록 조회와 새 게시글 생성 API
+- `/api/posts/:id` : 특정 게시글 하나를 조회하는 API
+- `/api` 접두사 : 화면 URL과 데이터 API URL을 구분
 
 ## 실행
 
@@ -89,10 +100,10 @@ npm start
 
 ```text
 http://localhost:3000
-http://localhost:3000/health
+http://localhost:3000/api/health
 http://localhost:3000/static/style.css
 http://localhost:3000/static/app.js
-http://localhost:3000/posts
-http://localhost:3000/posts/1
+http://localhost:3000/api/posts
+http://localhost:3000/api/posts/1
 http://localhost:3000/not-found
 ```
