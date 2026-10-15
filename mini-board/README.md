@@ -88,6 +88,16 @@ URL을 역할에 맞게 설계합니다.
 - `/api/posts/:id` : 특정 게시글 하나를 조회하는 API
 - `/api` 접두사 : 화면 URL과 데이터 API URL을 구분
 
+## 10단계 목표
+
+`express.Router()`로 관련 URL과 요청 처리 코드를 파일별로 묶습니다.
+
+- `src/routes/apiRouter.js` : `/api` 아래의 API 라우트 조립
+- `src/routes/postsRouter.js` : 게시글 조회와 생성 라우트 묶음
+- `app.use("/api", apiRouter)` : API 라우터의 기준 경로 설정
+- `apiRouter.use("/posts", postsRouter)` : 게시글 라우터 연결
+- 경로 조합 : `/api` + `/posts` + `/:id`가 `/api/posts/:id`가 됨
+
 ## 실행
 
 ```powershell
