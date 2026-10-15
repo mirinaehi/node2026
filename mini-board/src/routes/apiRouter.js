@@ -7,7 +7,8 @@ apiRouter.get("/health", (req, res) => {
   res.json({
     status: "ok",
     project: "mini-board",
-    step: 10
+    step: 11,
+    requestTime: req.requestTime
   });
 });
 

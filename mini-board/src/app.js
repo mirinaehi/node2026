@@ -1,8 +1,13 @@
 import express from "express";
 import { indexFilePath, notFoundFilePath, publicDirectoryPath } from "./config/paths.js";
+import { addRequestTime, requestLogger } from "./middleware/requestLogger.js";
 import apiRouter from "./routes/apiRouter.js";
 
 const app = express();
+
+// app.use에 등록한 순서대로 미들웨어가 실행됩니다.
+app.use(addRequestTime);
+app.use(requestLogger);
 
 // JSON 요청 본문을 req.body 객체로 바꿔 POST 라우트에서 사용할 수 있게 합니다.
 app.use(express.json());

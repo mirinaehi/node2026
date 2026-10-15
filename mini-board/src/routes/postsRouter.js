@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { createPost, getPostById, readPosts } from "../data/postsFile.js";
+import validatePostInput from "../middleware/validatePostInput.js";
 
 const postsRouter = Router();
 
@@ -31,20 +32,10 @@ postsRouter.get("/:id", async (req, res) => {
   }
 });
 
-postsRouter.post("/", async (req, res) => {
-  // ?.는 값이 없을 때 에러를 내지 않고 undefined를 돌려주는 optional chaining입니다.
-  // req.body.title ? req.body.title.trim() : undefined;
-  const title = req.body.title?.trim();
-  const content = req.body.content?.trim();
-  const author = req.body.author?.trim();
-
-  if (!title || !content) {
-    res.status(400).json({ message: "제목과 내용을 입력해 주세요." });
-    return;
-  }
-
+// validatePostInput을 통과한 요청만 마지막 라우트 처리 함수까지 도착합니다.
+postsRouter.post("/", validatePostInput, async (req, res) => {
   try {
-    const post = await createPost({ title, content, author });
+    const post = await createPost(req.postInput);
     res.status(201).json(post);
   } catch (error) {
     console.error(error);

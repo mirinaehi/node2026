@@ -98,6 +98,16 @@ URL을 역할에 맞게 설계합니다.
 - `apiRouter.use("/posts", postsRouter)` : 게시글 라우터 연결
 - 경로 조합 : `/api` + `/posts` + `/:id`가 `/api/posts/:id`가 됨
 
+## 11단계 목표
+
+요청이 라우트에 도착하기 전에 미들웨어로 공통 작업을 처리합니다.
+
+- `addRequestTime` : 모든 요청에 `req.requestTime` 추가
+- `requestLogger` : 요청 시간, HTTP 메서드, URL을 콘솔에 기록
+- `validatePostInput` : 게시글 작성 요청의 제목과 내용 검사
+- `next()` : 다음 미들웨어나 라우트 처리 함수로 요청 전달
+- 응답 후 `return` : 조건을 통과하지 못한 요청을 중간에서 종료
+
 ## 실행
 
 ```powershell
