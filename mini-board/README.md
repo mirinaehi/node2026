@@ -108,6 +108,16 @@ URL을 역할에 맞게 설계합니다.
 - `next()` : 다음 미들웨어나 라우트 처리 함수로 요청 전달
 - 응답 후 `return` : 조건을 통과하지 못한 요청을 중간에서 종료
 
+## 12단계 목표
+
+요청과 응답을 처리하는 코드를 라우터에서 컨트롤러로 분리합니다.
+
+- `src/controllers/healthController.js` : 서버 상태 응답 처리
+- `src/controllers/postsController.js` : 게시글 조회와 생성 요청 처리
+- 라우터 : HTTP 메서드와 URL을 컨트롤러 함수에 연결
+- 컨트롤러 : `req`에서 요청값을 읽고 `res`로 응답
+- `try/catch` : 각 컨트롤러에서 발생한 에러를 직접 처리
+
 ## 실행
 
 ```powershell
