@@ -41,6 +41,10 @@
   server.js    라우터를 연결하는 Express 서버
 11-express-middleware/
   server.js    Express 미들웨어 흐름 예제
+login/
+  public/      회원가입과 로그인 화면
+  src/         회원 저장, 비밀번호 해시, 세션과 인증 API
+  server.js    회원가입과 로그인 전용 Express 서버 (포트 5100)
 ```
 
 ## 1단계 목표
