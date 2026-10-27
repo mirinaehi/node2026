@@ -1,68 +1,44 @@
 <!DOCTYPE html>
-<!-- HTML은 화면의 구조, style.css는 모양, app.js는 사용자 조작과 서버 통신을 담당합니다. -->
 <html lang="ko">
 <head>
-  <!-- UTF-8로 한글을 표시하고, 작은 화면에서는 기기 너비에 맞춰 보여 줍니다. -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>회원가입 · 로그인</title>
+  <title>회원가입과 로그인</title>
   <link rel="stylesheet" href="/style.css">
-  <!-- defer를 넣으면 HTML 구조를 모두 읽은 뒤 JS를 실행해 요소를 찾을 수 있게 합니다. -->
   <script src="/app.js" defer></script>
 </head>
 <body>
-  <main class="card">
-    <a class="brand" href="/" aria-label="처음으로"><span class="brand-mark" aria-hidden="true">L</span> login</a>
-    <!-- id는 JS가 특정 요소를 찾는 이름, class는 주로 공통 스타일을 적용하는 이름입니다.
-         처음에는 인증 폼만 표시하고, 로그인 성공 시 app.js가 두 section의 hidden을 바꿉니다. -->
-    <section id="auth-section" aria-labelledby="heading">
-      <h1 id="heading">다시 만나 반가워요</h1>
-      <p id="description" class="description">이메일로 로그인하고 시작하세요.</p>
-      <div class="tabs" role="group" aria-label="인증 메뉴">
-        <!-- type="button"은 일반 버튼, 아래의 type="submit"은 폼 제출 버튼입니다. -->
-        <button type="button" id="login-tab" class="tab active" aria-pressed="true">로그인</button>
-        <button type="button" id="signup-tab" class="tab" aria-pressed="false">회원가입</button>
-      </div>
-      <form id="auth-form">
-        <!-- 로그인에는 이름이 필요 없어서 숨깁니다. 회원가입으로 바꾸면 JS가 활성화합니다.
-             hidden만으로는 폼 검사에서 빠지지 않으므로 입력란에 disabled도 지정합니다. -->
-        <div id="name-field" class="field" hidden>
-          <label for="name">이름</label>
-          <input id="name" name="name" autocomplete="name" maxlength="30" placeholder="홍길동" disabled>
-        </div>
-        <div class="field">
-          <!-- label의 for와 input의 id를 맞추면 라벨을 클릭해도 입력란이 선택됩니다. -->
-          <label for="email">이메일</label>
-          <!-- required는 필수 입력, type="email"은 이메일 형태의 브라우저 검사를 뜻합니다. -->
-          <input id="email" name="email" type="email" autocomplete="username" maxlength="254" placeholder="name@example.com" required>
-        </div>
-        <div class="field">
-          <label for="password">비밀번호</label>
-          <!-- type="password"는 글자를 가려 보여 줄 뿐입니다. 비밀번호 해시는 서버가 만듭니다. -->
-          <input id="password" name="password" type="password" autocomplete="current-password" minlength="8" maxlength="128" placeholder="8자 이상 입력해 주세요" required aria-describedby="password-help">
-          <small id="password-help">비밀번호는 8~128자로 입력해 주세요.</small>
-        </div>
-        <div id="confirm-field" class="field" hidden>
-          <!-- 두 비밀번호가 같은지는 app.js의 checkPasswords 함수에서 검사합니다. -->
-          <label for="password-confirm">비밀번호 확인</label>
-          <input id="password-confirm" name="passwordConfirm" type="password" autocomplete="new-password" minlength="8" maxlength="128" placeholder="비밀번호를 한 번 더 입력해 주세요" disabled>
-        </div>
-        <button id="submit-button" class="primary" type="submit">로그인</button>
+  <main>
+    <h1>회원가입과 로그인</h1>
+    <!-- 입력은 브라우저가 받고, 가입과 로그인 처리는 app.js가 서버 API에 요청합니다. -->
+    <section id="auth-section">
+      <form id="signup-form">
+        <h2>회원가입</h2>
+        <label for="signup-name">이름</label>
+        <input id="signup-name" name="name" autocomplete="name">
+        <label for="signup-email">이메일</label>
+        <input id="signup-email" name="email" autocomplete="username">
+        <label for="signup-password">비밀번호</label>
+        <input id="signup-password" name="password" type="password" autocomplete="new-password">
+        <button type="submit" disabled>회원가입</button>
       </form>
-      <p class="switch-hint"><span id="switch-hint">아직 계정이 없으신가요?</span> <button id="switch-button" type="button" class="text-button">회원가입</button></p>
+      <form id="login-form">
+        <h2>로그인</h2>
+        <label for="login-email">이메일</label>
+        <input id="login-email" name="email" autocomplete="username">
+        <label for="login-password">비밀번호</label>
+        <input id="login-password" name="password" type="password" autocomplete="current-password">
+        <button type="submit" disabled>로그인</button>
+      </form>
     </section>
-    <!-- 로그인에 성공하면 서버가 돌려준 이름과 이메일을 이 영역에 글자로 넣습니다. -->
-    <section id="user-section" aria-labelledby="welcome-heading" hidden>
-      <div class="success-mark" aria-hidden="true">✓</div>
-      <!-- tabindex="-1"은 JS의 focus()는 허용하되 일반 Tab 이동 순서에는 넣지 않는 설정입니다. -->
-      <h1 id="welcome-heading" tabindex="-1">로그인 완료</h1>
-      <p class="description"><strong id="user-name"></strong>님, 환영합니다.</p>
-      <div class="profile"><span>로그인한 이메일</span><strong id="user-email"></strong></div>
-      <button id="logout-button" class="primary" type="button">로그아웃</button>
+    <!-- 서버가 로그인 상태를 확인한 뒤 이 영역에 회원 정보를 표시합니다. -->
+    <section id="user-section" hidden>
+      <h2>로그인 완료</h2>
+      <p><strong id="user-name"></strong>님, 환영합니다.</p>
+      <p id="user-email"></p>
+      <button id="logout-button" type="button">로그아웃</button>
     </section>
-    <!-- aria-live는 안내가 바뀌었을 때 화면 읽기 도구가 그 내용을 알리도록 돕습니다. -->
-    <p id="message" class="message" role="status" aria-live="polite" aria-atomic="true"></p>
+    <p id="message" role="status" aria-live="polite"></p>
   </main>
-  <p class="footer">작은 시작, 나만의 계정.</p>
 </body>
 </html>

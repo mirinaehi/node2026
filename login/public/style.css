@@ -1,63 +1,23 @@
-/* :root는 문서 최상위 요소입니다. 전체에서 사용할 기본 글꼴과 색을 지정합니다. */
-:root {
-  font-family: "Segoe UI", "Malgun Gothic", sans-serif;
-  color: #172b29;
-  background: #f3f6f5;
-  font-synthesis: none;
-}
-/* border-box는 너비 계산에 테두리와 안쪽 여백을 포함해 입력란이 넘치지 않게 합니다. */
 * { box-sizing: border-box; }
-/* JS가 hidden을 설정한 요소는 다른 display 스타일보다 우선해서 숨깁니다. */
 [hidden] { display: none !important; }
-body { margin: 0; min-height: 100vh; padding: 64px 20px 24px; }
-button, input { font: inherit; }
-button { cursor: pointer; }
-/* .으로 시작하면 HTML의 class 이름을 선택합니다.
-   최대 너비를 제한하고 좌우 margin을 auto로 두어 카드를 가운데 배치합니다. */
-.card {
-  max-width: 440px;
-  margin: 0 auto;
-  padding: 36px;
-  background: #fff;
-  border: 1px solid #e1e8e5;
-  border-radius: 20px;
-  box-shadow: 0 12px 40px #173e3010;
-}
-.brand { display: inline-flex; align-items: center; gap: 9px; margin-bottom: 38px; color: #173e34; font-size: 21px; font-weight: 750; text-decoration: none; }
-.brand-mark { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 9px; color: white; background: #23745e; font-size: 19px; }
-h1 { margin: 0 0 10px; font-size: 26px; letter-spacing: -1px; }
-.description { margin: 0 0 28px; color: #64756f; font-size: 14px; line-height: 1.7; }
-/* flex는 여러 항목을 가로로 나란히 배치할 때 사용합니다. */
-.tabs { display: flex; padding: 4px; margin-bottom: 26px; border-radius: 10px; background: #eff3f1; }
-.tab { flex: 1; padding: 10px; border: 0; border-radius: 7px; background: transparent; color: #64756f; font-weight: 600; }
-/* .tab.active는 tab과 active 클래스를 모두 가진 요소, 즉 현재 선택된 메뉴입니다. */
-.tab.active { background: white; color: #1d614e; box-shadow: 0 1px 4px #152f2514; }
-.field { margin-bottom: 20px; }
-label { display: block; margin-bottom: 8px; font-size: 13px; font-weight: 650; }
-input { width: 100%; min-height: 46px; padding: 12px 14px; border: 1px solid #d8e0dd; border-radius: 8px; background: #fff; color: #172b29; font-size: 14px; }
-input::placeholder { color: #7b8882; }
-/* :focus-visible은 키보드 조작 등으로 선택된 요소에 테두리를 표시합니다. */
-:focus-visible { outline: 3px solid #81b9a7; outline-offset: 3px; }
-input:focus { border-color: #23745e; }
-small { display: block; margin-top: 8px; font-size: 12px; color: #64756f; }
-.primary { width: 100%; min-height: 46px; padding: 12px; border: 0; border-radius: 8px; background: #23745e; color: white; font-size: 14px; font-weight: 650; }
-/* :hover는 포인터를 올렸을 때, :disabled는 버튼이 비활성화되었을 때 적용됩니다. */
-.primary:hover { background: #1a5d4a; }
+body { margin: 0; padding: 32px 16px; background: #f3f6f5; color: #172b29; font-family: "Malgun Gothic", sans-serif; }
+main { max-width: 760px; margin: auto; padding: 28px; background: white; border: 1px solid #d8e0dd; border-radius: 12px; }
+h1 { margin: 0 0 24px; font-size: 26px; }
+h2 { margin: 0 0 20px; font-size: 20px; }
+/* 두 폼을 나란히 배치하고, 작은 화면에서는 아래쪽 규칙으로 세로 배치합니다. */
+#auth-section { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+form { display: flex; flex-direction: column; align-items: stretch; }
+label { margin-bottom: 6px; font-size: 14px; }
+input, button { min-height: 44px; padding: 10px 12px; font: inherit; border: 1px solid #c8d5cf; border-radius: 6px; }
+input { width: 100%; margin-bottom: 18px; }
+button { background: #23745e; color: white; cursor: pointer; }
 button:disabled { opacity: .6; cursor: wait; }
-.switch-hint { margin: 24px 0 0; color: #64756f; font-size: 13px; text-align: center; }
-.text-button { padding: 4px; border: 0; background: transparent; color: #1d614e; font-size: inherit; font-weight: 650; }
-.message { margin: 18px 0 0; color: #1d614e; font-size: 13px; line-height: 1.7; overflow-wrap: anywhere; }
-/* 내용이 없는 안내 영역은 숨기고, 오류 안내에는 error 클래스로 다른 색을 적용합니다. */
-.message:empty { display: none; }
-.message.error { color: #b12c36; }
-.success-mark { display: grid; place-items: center; width: 48px; height: 48px; margin-bottom: 20px; border-radius: 50%; background: #e8f4ee; color: #23745e; font-size: 24px; }
-.profile { display: grid; gap: 10px; padding: 18px; margin-bottom: 24px; background: #f3f6f5; border-radius: 10px; overflow-wrap: anywhere; }
-.profile span { color: #64756f; font-size: 12px; }
-.profile strong { font-size: 14px; }
-.footer { margin: 24px 0 0; color: #64756f; text-align: center; font-size: 12px; }
-/* 미디어 쿼리: 화면 너비가 480px 이하일 때만 여백과 글자 크기를 줄입니다. */
-@media (max-width: 480px) {
-  body { padding: 24px 16px; }
-  .card { padding: 28px 24px; }
-  h1 { font-size: 24px; }
+:focus-visible { outline: 3px solid #81b9a7; outline-offset: 3px; }
+#message { margin: 24px 0 0; color: #1d614e; line-height: 1.7; }
+#message:empty { display: none; }
+#message.error { color: #b12c36; }
+#user-email { overflow-wrap: anywhere; }
+@media (max-width: 600px) {
+  #auth-section { grid-template-columns: 1fr; }
+  main { padding: 20px; }
 }
