@@ -12,7 +12,52 @@ npm start
 
 브라우저에서 `http://localhost:5100`을 엽니다. 포트는 `PORT` 환경 변수로 바꿀 수 있습니다.
 
-정적 파일과 회원 파일은 `C:/dev/node2026/login/public`, `C:/dev/node2026/login/data/users.json`이라는 절대 경로로 지정했습니다. 상위 폴더에서 `node login/server.js`로 실행해도 같은 파일을 찾습니다. 프로젝트를 다른 위치로 옮기면 `src/app.js`에 적힌 두 경로를 수정합니다.
+정적 파일과 회원 파일은 `./public`, `./data/users.json`이라는 상대 경로로 지정했습니다. 명령어를 실행한 폴더를 기준으로 찾으므로, 위 순서처럼 `login` 폴더로 이동한 뒤 실행합니다. 같은 폴더에서 `node server.js`로 직접 실행할 수도 있습니다.
+
+상위 폴더에서 실행하려면 `npm --prefix ./login start`를 사용합니다. npm이 `login` 폴더를 기준으로 서버를 실행합니다. 상위 폴더에서 `node login/server.js`로 직접 실행하면 경로 기준이 달라집니다.
+
+## 세션 없는 비교 예제
+
+```powershell
+cd C:\dev\node2026\login
+npm run start:no-session
+```
+
+`http://localhost:3000`에서 같은 회원가입·로그인 화면을 사용합니다. `node 세션없어.js`로 직접 실행할 수도 있습니다. 이 파일도 ES Module의 `import` 문법을 사용합니다.
+
+`세션없어.js`는 기존 화면의 `/api/signup`, `/api/login`, `/api/me`, `/api/logout` 주소와 JSON 응답 형식을 맞춘 별도 서버입니다. 회원 저장과 비밀번호 해시 함수는 재사용합니다. 화면 파일도 `public` 폴더를 그대로 사용합니다.
+
+로그인하면 임의의 세션 토큰 대신 회원 ID 자체를 `userId` 쿠키로 보냅니다. `/api/me`는 쿠키의 회원 ID로 파일에서 회원을 찾습니다. 서버에 세션이나 JWT를 만들지 않습니다. 로그아웃은 브라우저 쿠키만 삭제하므로 복사해 둔 쿠키 값은 서버에서 무효화되지 않습니다.
+
+원래의 `GET /admin` 예제도 유지했습니다. `userId=admin` 쿠키만 보내면 관리자 페이지를 허용합니다. 쿠키 값을 그대로 신뢰했을 때의 문제를 살펴보는 로컬 비교 예제입니다. `세션없어.js`도 같은 상대 경로를 사용합니다. 상위 폴더에서는 `npm --prefix ./login run start:no-session`으로 실행합니다.
+
+## JWT 비교 예제
+
+`jwt.js`는 현재 `세션있어.js`의 고정 계정과 URL 실습 방식을 따라 만든 JWT 예제입니다.
+
+```powershell
+cd C:\dev\node2026\login
+npm install
+npm run start:jwt
+```
+
+기본 포트는 3000입니다. 브라우저에서 아래 주소로 실습합니다.
+
+| 주소 | 동작 |
+| --- | --- |
+| `http://localhost:3000/login?id=student01&pw=1234` | 학생 로그인 |
+| `http://localhost:3000/login?id=admin&pw=admin1234` | 관리자 로그인 |
+| `http://localhost:3000/mypage` | JWT를 확인하고 회원 ID 표시 |
+| `http://localhost:3000/admin` | JWT의 role이 admin일 때 허용 |
+| `http://localhost:3000/logout` | JWT 쿠키 삭제 |
+
+로그인하면 `jwt.sign()`으로 `{ userId, role }`을 담은 JWT에 서명하고 `access_token` 쿠키로 전달합니다. 비밀번호는 JWT에 넣지 않습니다. `requireLogin()`은 `jwt.verify()`로 HS256 서명과 만료 시간을 확인하고, 통과한 정보를 `req.user`에 넣습니다. 발급과 검증 API는 [jsonwebtoken 공식 문서](https://github.com/auth0/node-jsonwebtoken)를 참고했습니다.
+
+JWT와 쿠키의 유효 기간은 30분입니다. 서버에 세션을 저장하지 않으므로 같은 서명 키를 유지하면 새 서버에서도 기존 JWT를 확인할 수 있습니다. 서명 키는 `JWT_SECRET` 환경 변수가 있으면 사용하고, 없으면 코드에 적힌 실습용 키를 사용합니다.
+
+로그아웃은 브라우저의 쿠키를 지웁니다. 이미 복사한 JWT는 만료 전까지 유효하며, 즉시 무효화하는 별도 목록은 이 예제에 포함하지 않습니다.
+
+JWT 예제만 테스트하려면 `npm run test:jwt`를 실행합니다. 임시 포트에서 발급·권한·변조·만료·로그아웃 동작을 확인한 뒤 서버를 종료합니다.
 
 ## 핵심 흐름
 
@@ -65,3 +110,5 @@ npm test
 ```
 
 임시 파일과 임시 서버로 인증 동작을 확인하고 종료합니다. 실제 회원 데이터에는 영향을 주지 않습니다.
+
+테스트도 `login` 폴더에서 실행합니다. 상위 폴더에서는 `npm --prefix ./login test`를 사용합니다.

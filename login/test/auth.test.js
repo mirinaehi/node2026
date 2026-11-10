@@ -5,14 +5,15 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 import { createApp } from "../src/app.js";
+import { createCookieApp } from "../세션없어.js";
 
 const account = { name: "테스트", email: "hello@example.com", password: "password123" };
 
 // 실제 회원 파일 대신 임시 파일과 임시 포트로 검증하고, 테스트가 끝나면 정리합니다.
-async function fixture(t, options = {}) {
+async function fixture(t, options = {}, createApplication = createApp) {
   const directory = await mkdtemp(join(tmpdir(), "login-test-"));
   const usersFile = options.usersFile || join(directory, "users.json");
-  const server = createApp({ usersFile, ...options }).listen(0, "127.0.0.1");
+  const server = createApplication({ usersFile, ...options }).listen(0, "127.0.0.1");
   await new Promise((resolve) => server.once("listening", resolve));
   t.after(async () => {
     await new Promise((resolve, reject) => server.close((error) => error ? reject(error) : resolve()));
@@ -135,4 +136,52 @@ test("서로 다른 앱 사이에서 로그인 세션을 공유하지 않음", a
   const cookie = login.headers["set-cookie"][0].split(";")[0];
   assert.equal((await first.request("/api/me", { cookie })).status, 200);
   assert.equal((await second.request("/api/me", { cookie })).status, 401);
+});
+
+test("세션 없는 예제에서 기존 화면의 가입·로그인·조회·로그아웃 API 사용", async (t) => {
+  const { request } = await fixture(t, {}, createCookieApp);
+  const page = await request("/");
+  assert.equal(page.status, 200);
+  assert.match(page.text, /id="signup-form"/);
+  assert.match(page.text, /id="login-form"/);
+  assert.equal((await request("/app.js")).status, 200);
+  assert.equal((await request("/style.css")).status, 200);
+  assert.equal((await request("/api/me")).status, 401);
+
+  const signup = await request("/api/signup", { method: "POST", body: account });
+  assert.equal(signup.status, 201);
+  assert.equal((await request("/api/signup", { method: "POST", body: account })).status, 409);
+  const failed = await request("/api/login", { method: "POST", body: { ...account, password: "wrong" } });
+  assert.equal(failed.status, 401);
+  assert.equal(failed.headers["set-cookie"], undefined);
+
+  const login = await request("/api/login", { method: "POST", body: account });
+  assert.equal(login.status, 200);
+  assert.deepEqual(login.data.user, signup.data.user);
+  const cookie = login.headers["set-cookie"][0].split(";")[0];
+  assert.equal(cookie, `userId=${signup.data.user.id}`);
+  const me = await request("/api/me", { cookie });
+  assert.equal(me.status, 200);
+  assert.deepEqual(me.data.user, signup.data.user);
+
+  const logout = await request("/api/logout", { method: "POST", body: {}, cookie });
+  assert.equal(logout.status, 200);
+  assert.ok(logout.data.message);
+  assert.match(logout.headers["set-cookie"][0], /Expires=Thu, 01 Jan 1970/);
+  assert.equal((await request("/api/me")).status, 401);
+  assert.equal((await request("/api/me", { cookie })).status, 200);
+});
+
+test("세션 없는 비교 예제는 쿠키 값만으로 회원과 관리자를 판단", async (t) => {
+  const { request } = await fixture(t, {}, createCookieApp);
+  const first = await request("/api/signup", { method: "POST", body: account });
+  const second = await request("/api/signup", { method: "POST", body: { ...account, email: "other@example.com" } });
+  const login = await request("/api/login", { method: "POST", body: account });
+  assert.equal(login.data.user.id, first.data.user.id);
+
+  const changed = await request("/api/me", { cookie: `userId=${second.data.user.id}` });
+  assert.equal(changed.status, 200);
+  assert.equal(changed.data.user.id, second.data.user.id);
+  assert.equal((await request("/admin")).status, 403);
+  assert.equal((await request("/admin", { cookie: "userId=admin" })).status, 200);
 });

@@ -2,7 +2,7 @@ import express from "express";
 import { createUser, findByEmail, hashPassword, publicUser, verifyPassword } from "./users.js";
 import { createSession, getSession, destroySession } from "./sessions.js";
 
-export function createApp({ usersFile = "C:/dev/node2026/login/data/users.json", secureCookies = process.env.NODE_ENV === "production" } = {}) {
+export function createApp({ usersFile = "./data/users.json", secureCookies = process.env.NODE_ENV === "production" } = {}) {
   const app = express();
   // 이 앱의 로그인 기록을 보관하며, 세션 함수에 전달해 생성·조회·삭제합니다.
   const sessions = new Map();
@@ -45,8 +45,8 @@ export function createApp({ usersFile = "C:/dev/node2026/login/data/users.json",
     res.json({ message: "로그아웃되었습니다." });
   });
 
-  // 절대 경로를 사용하면 어느 폴더에서 실행하든 같은 public 폴더를 찾습니다.
-  app.use(express.static("C:/dev/node2026/login/public"));
+  // 상대 경로는 명령어를 실행한 폴더 기준입니다. login 폴더에서 실행합니다.
+  app.use(express.static("./public"));
 
   return app;
 }
