@@ -12,7 +12,12 @@ const users = {
 
 // JWT의 서명과 만료 시간을 검증한 뒤, 회원 정보를 req.user에 넣고 다음 처리로 넘깁니다.
 export function requireLogin(req, res, next) {
+  // 브라우저가 access_token이라는 이름의 쿠키로 보낸 JWT를 꺼냅니다.
   const token = req.cookies.access_token;
+
+  // req.app은 현재 요청을 처리하는 Express 앱이며 createJwtApp()에서 만든 app과 같은 객체입니다.
+  // 이 함수에서는 createJwtApp() 내부의 app 변수를 직접 사용할 수 없으므로,
+  // req.app.locals를 통해 앱 전체가 공유하는 JWT 비밀 키를 가져옵니다.
   const secret = req.app.locals.jwtSecret;
   if (!token) return res.status(401).send("로그인이 필요합니다.");
 
@@ -27,7 +32,8 @@ export function requireLogin(req, res, next) {
 export function login(req, res) {
   const { id, pw } = req.query;
   const user = users[id];
-  if (!Object.hasOwn(users, id) || user.password !== pw) {
+  // 등록된 사용자가 없거나 비밀번호가 다르면 로그인에 실패합니다.
+  if (!user || !pw || user.password !== pw) {
     return res.status(401).send("로그인 실패!");
   }
 
@@ -63,7 +69,16 @@ export function logout(req, res) {
 export function createJwtApp({ secret = process.env.JWT_SECRET || "classroom-jwt-demo-secret-change-me-2026" } = {}) {
   const app = express();
   app.locals.jwtSecret = secret;
-  app.locals.cookieOptions = { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", path: "/" };
+
+  // JWT 쿠키를 만들고 삭제할 때 함께 사용하는 설정입니다.
+  // JavaScript에서는 읽지 못하게 하고, 운영 환경에서는 HTTPS로만 전송합니다.
+  // 다른 사이트에서 오는 요청을 제한하며, 현재 서버의 모든 주소에서 사용합니다.
+  app.locals.cookieOptions = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/"
+  };
 
   app.use(cookieParser());
   app.get("/login", login);
