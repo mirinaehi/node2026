@@ -15,8 +15,7 @@ export function requireLogin(req, res, next) {
   // 브라우저가 access_token이라는 이름의 쿠키로 보낸 JWT를 꺼냅니다.
   const token = req.cookies.access_token;
 
-  // req.app은 현재 요청을 처리하는 Express 앱이며 createJwtApp()에서 만든 app과 같은 객체입니다.
-  // 이 함수에서는 createJwtApp() 내부의 app 변수를 직접 사용할 수 없으므로,
+  // req.app은 현재 요청을 처리하는 Express 앱이며 아래에서 만든 app과 같은 객체입니다.
   // req.app.locals를 통해 앱 전체가 공유하는 JWT 비밀 키를 가져옵니다.
   const secret = req.app.locals.jwtSecret;
   if (!token) return res.status(401).send("로그인이 필요합니다.");
@@ -65,29 +64,25 @@ export function logout(req, res) {
   res.send("로그아웃 완료!");
 }
 
-// 앱을 만들고 공통 설정과 라우트를 연결합니다. 각 요청의 처리 함수는 바깥에 따로 정의합니다.
-export function createJwtApp({ secret = process.env.JWT_SECRET || "classroom-jwt-demo-secret-change-me-2026" } = {}) {
-  const app = express();
-  app.locals.jwtSecret = secret;
+// Express 앱을 만들고 공통 설정과 라우트를 바로 연결합니다.
+export const app = express();
+app.locals.jwtSecret = process.env.JWT_SECRET || "classroom-jwt-demo-secret-change-me-2026";
 
-  // JWT 쿠키를 만들고 삭제할 때 함께 사용하는 설정입니다.
-  // JavaScript에서는 읽지 못하게 하고, 운영 환경에서는 HTTPS로만 전송합니다.
-  // 다른 사이트에서 오는 요청을 제한하며, 현재 서버의 모든 주소에서 사용합니다.
-  app.locals.cookieOptions = {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    path: "/"
-  };
+// JWT 쿠키를 만들고 삭제할 때 함께 사용하는 설정입니다.
+// JavaScript에서는 읽지 못하게 하고, 운영 환경에서는 HTTPS로만 전송합니다.
+// 다른 사이트에서 오는 요청을 제한하며, 현재 서버의 모든 주소에서 사용합니다.
+app.locals.cookieOptions = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "lax",
+  path: "/"
+};
 
-  app.use(cookieParser());
-  app.get("/login", login);
-  app.get("/mypage", requireLogin, mypage);
-  app.get("/admin", requireLogin, admin);
-  app.get("/logout", logout);
-
-  return app;
-}
+app.use(cookieParser());
+app.get("/login", login);
+app.get("/mypage", requireLogin, mypage);
+app.get("/admin", requireLogin, admin);
+app.get("/logout", logout);
 
 // process.argv[1]에는 Node.js로 직접 실행한 파일의 경로가 들어 있습니다.
 // 그 경로가 jwt.js로 끝날 때만 서버를 켭니다.
@@ -95,7 +90,6 @@ export function createJwtApp({ secret = process.env.JWT_SECRET || "classroom-jwt
 // 파이썬에서 __name__ == "__main__"과 같은 역할을 합니다.
 if (process.argv[1]?.endsWith("jwt.js")) {
   const PORT = process.env.PORT || 3000;
-  const app = createJwtApp();
   app.listen(PORT, () => {
     console.log(`JWT server is running at http://localhost:${PORT}`);
   });

@@ -1,0 +1,14 @@
+{
+  "name": "cors-example",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "frontend": "node frontend/server.js",
+    "backend": "node backend/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  }
+}

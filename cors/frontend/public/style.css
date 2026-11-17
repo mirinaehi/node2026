@@ -1,0 +1,19 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  background: #f4f6f8;
+}
+
+main {
+  width: 500px;
+  max-width: calc(100% - 40px);
+  margin: 100px auto;
+  padding: 30px;
+  background: white;
+  border-radius: 12px;
+}
+
+button {
+  padding: 10px 16px;
+  cursor: pointer;
+}

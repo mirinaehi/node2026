@@ -2,13 +2,14 @@ import assert from "node:assert/strict";
 import { request as httpRequest } from "node:http";
 import test from "node:test";
 import jwt from "jsonwebtoken";
-import { createJwtApp } from "../jwt.js";
+import { app } from "../jwt.js";
 
 const secret = "jwt-classroom-test-signing-secret";
 
 // 회원 파일을 사용하지 않고, 임시 포트에서 JWT 발급과 접근 권한을 확인합니다.
-async function fixture(t, signingKey = secret) {
-  const server = createJwtApp({ secret: signingKey }).listen(0, "127.0.0.1");
+async function fixture(t) {
+  app.locals.jwtSecret = secret;
+  const server = app.listen(0, "127.0.0.1");
   await new Promise((resolve) => server.once("listening", resolve));
   t.after(() => new Promise((resolve) => server.close(resolve)));
 
@@ -89,12 +90,3 @@ test("권한 변조, 만료, 잘못된 키와 서명 없는 토큰 거절", asyn
   }
 });
 
-test("같은 서명 키를 쓰는 새 앱에서도 JWT 확인 가능", async (t) => {
-  const first = await fixture(t);
-  const second = await fixture(t);
-  const differentKey = await fixture(t, "different-server-key");
-  const login = await first("/login?id=student01&pw=1234");
-  const cookie = login.headers["set-cookie"][0].split(";")[0];
-  assert.equal((await second("/mypage", cookie)).status, 200);
-  assert.equal((await differentKey("/mypage", cookie)).status, 401);
-});
