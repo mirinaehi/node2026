@@ -2,7 +2,7 @@ export function getHealth(req, res) {
   res.json({
     status: "ok",
     project: "mini-board",
-    step: 12,
+    step: 13,
     requestTime: req.requestTime
   });
 }

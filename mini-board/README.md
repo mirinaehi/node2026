@@ -118,7 +118,18 @@ URL을 역할에 맞게 설계합니다.
 - 컨트롤러 : `req`에서 요청값을 읽고 `res`로 응답
 - `try/catch` : 각 컨트롤러에서 발생한 에러를 직접 처리
 
-## 실행
+## 13단계 목표
+
+프런트엔드를 React로 전환하고 다른 출처의 Express API와 CORS로 연결합니다.
+
+- `frontend/` : Vite 기반 React 프런트엔드
+- React state : 게시글 목록, 작성 폼, 로딩 상태 관리
+- `useEffect()` : 첫 화면에서 게시글 API 호출
+- 제어 입력 : 입력값과 React state 연결
+- CORS : `http://localhost:5173`에서 `http://localhost:3000` API 호출 허용
+- 기존 `public/` : 이전 단계의 순수 HTML/CSS/JS 예제로 유지
+
+## Express 백엔드 실행
 
 ```powershell
 cd C:\dev\node2026\mini-board
@@ -126,7 +137,21 @@ npm install
 npm start
 ```
 
-브라우저에서 아래 주소를 열어 봅니다.
+백엔드 API는 `http://localhost:3000`에서 실행됩니다.
+
+## React 프런트엔드 실행
+
+새 PowerShell 창에서 실행합니다.
+
+```powershell
+cd C:\dev\node2026\mini-board\frontend
+npm install
+npm run dev
+```
+
+브라우저에서 `http://localhost:5173`을 엽니다.
+
+백엔드 API 주소는 아래와 같습니다.
 
 ```text
 http://localhost:3000

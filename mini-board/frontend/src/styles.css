@@ -1,0 +1,221 @@
+:root {
+  font-family: Inter, "Noto Sans KR", Arial, sans-serif;
+  color: #202124;
+  background: #eef2f7;
+  font-synthesis: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+.app-shell {
+  width: min(920px, calc(100% - 32px));
+  margin: 40px auto;
+  background: #ffffff;
+  border: 1px solid #d8dee8;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px 32px;
+  color: #ffffff;
+  background: #17324d;
+  border-bottom: 4px solid #2f8f6b;
+}
+
+.app-header h1,
+.app-header p {
+  margin: 0;
+}
+
+.app-header h1 {
+  margin-top: 6px;
+  font-size: 30px;
+  letter-spacing: 0;
+}
+
+.eyebrow {
+  color: #b9d8cc;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.app-header a {
+  color: #ffffff;
+  text-decoration: none;
+  border-bottom: 1px solid #8fcbb5;
+}
+
+section {
+  padding: 28px 32px;
+}
+
+section + section {
+  border-top: 1px solid #e1e5eb;
+}
+
+h2 {
+  margin: 0 0 20px;
+  font-size: 20px;
+  letter-spacing: 0;
+}
+
+.post-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.post-form label {
+  display: grid;
+  gap: 7px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.post-form label:nth-child(2) {
+  grid-column: 1 / -1;
+}
+
+.post-form input,
+.post-form textarea {
+  width: 100%;
+  padding: 11px 12px;
+  color: #202124;
+  background: #ffffff;
+  border: 1px solid #b8c0cc;
+  border-radius: 4px;
+}
+
+.post-form input:focus,
+.post-form textarea:focus {
+  outline: 3px solid #c7e8dc;
+  border-color: #237a5b;
+}
+
+.post-form button,
+.secondary-button {
+  width: fit-content;
+  padding: 10px 16px;
+  font-weight: 700;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.post-form button {
+  color: #ffffff;
+  background: #237a5b;
+  border: 1px solid #237a5b;
+}
+
+.post-form button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.secondary-button {
+  color: #17324d;
+  background: #ffffff;
+  border: 1px solid #9aa7b5;
+}
+
+.status-message,
+.list-message {
+  min-height: 22px;
+  margin: 14px 0 0;
+  color: #466079;
+  font-size: 14px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.section-heading h2 {
+  margin: 0;
+}
+
+.posts-list {
+  display: grid;
+  gap: 12px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.post-item {
+  padding: 18px;
+  background: #f8fafc;
+  border: 1px solid #d8dee8;
+  border-left: 4px solid #2f8f6b;
+  border-radius: 4px;
+}
+
+.post-item h3 {
+  margin: 10px 0 8px;
+  font-size: 18px;
+  letter-spacing: 0;
+}
+
+.post-item p {
+  margin: 0;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.post-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #607084;
+  font-size: 13px;
+}
+
+@media (max-width: 640px) {
+  .app-shell {
+    width: 100%;
+    margin: 0;
+    border: 0;
+  }
+
+  .app-header,
+  section {
+    padding: 24px 20px;
+  }
+
+  .app-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .post-form {
+    grid-template-columns: 1fr;
+  }
+
+  .post-form label:nth-child(2) {
+    grid-column: auto;
+  }
+}
