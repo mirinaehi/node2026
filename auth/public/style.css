@@ -1,0 +1,239 @@
+:root {
+  color: #182132;
+  background: #f5f7fb;
+  font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+header {
+  height: 68px;
+  padding: 0 max(24px, calc((100% - 1080px) / 2));
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #152033;
+  color: white;
+  font-weight: 700;
+}
+
+.logo {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 9px;
+  background: #5f66e9;
+}
+
+main {
+  width: min(1080px, calc(100% - 40px));
+  margin: 52px auto 80px;
+}
+
+.intro {
+  max-width: 700px;
+}
+
+.eyebrow,
+.step {
+  margin: 0 0 8px;
+  color: #5f66e9;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+}
+
+h1 {
+  margin: 0 0 12px;
+  font-size: 36px;
+}
+
+h2 {
+  margin: 0 0 18px;
+  font-size: 21px;
+}
+
+p {
+  color: #677084;
+  line-height: 1.65;
+}
+
+.concepts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 32px 0 22px;
+}
+
+.concepts article {
+  display: flex;
+  gap: 16px;
+  padding: 22px;
+  border: 1px solid #dfe4ed;
+  border-radius: 13px;
+  background: white;
+}
+
+.concepts article > span {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  place-items: center;
+  border-radius: 50%;
+  background: #eef0ff;
+  color: #5f66e9;
+  font-weight: 800;
+}
+
+.concepts h2,
+.concepts p {
+  margin: 0;
+}
+
+.concepts h2 {
+  margin-bottom: 7px;
+  font-size: 17px;
+}
+
+.concepts p {
+  font-size: 13px;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+.panel {
+  padding: 26px;
+  border: 1px solid #dfe4ed;
+  border-radius: 13px;
+  background: white;
+  box-shadow: 0 12px 32px rgb(25 38 66 / 6%);
+}
+
+.demo-accounts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+button {
+  border: 1px solid #dfe4ed;
+  border-radius: 9px;
+  background: white;
+  color: #182132;
+  cursor: pointer;
+}
+
+.demo-accounts button,
+.actions button {
+  padding: 13px;
+  text-align: left;
+}
+
+button strong,
+button small {
+  display: block;
+}
+
+button small {
+  margin-top: 5px;
+  color: #7b8496;
+}
+
+label {
+  display: block;
+  margin-top: 13px;
+  color: #4c5568;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+input {
+  width: 100%;
+  margin-top: 7px;
+  padding: 12px;
+  border: 1px solid #d7dce6;
+  border-radius: 8px;
+  font: inherit;
+}
+
+.primary {
+  width: 100%;
+  margin-top: 18px;
+  padding: 13px;
+  border-color: #5f66e9;
+  background: #5f66e9;
+  color: white;
+  font-weight: 800;
+}
+
+.login-state {
+  margin: 16px 0 0;
+  padding: 11px 13px;
+  border-radius: 8px;
+  background: #f3f5f8;
+  font-size: 13px;
+}
+
+.actions {
+  display: grid;
+  gap: 10px;
+}
+
+.actions button:hover,
+.demo-accounts button:hover {
+  border-color: #5f66e9;
+}
+
+.result {
+  margin-top: 20px;
+  overflow: hidden;
+  border-radius: 9px;
+  background: #101827;
+  color: #d8deea;
+}
+
+.result-title {
+  padding: 11px 14px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #2c3648;
+  font-size: 12px;
+}
+
+.success {
+  color: #63dda0;
+}
+
+.failure {
+  color: #ff8a8a;
+}
+
+pre {
+  min-height: 130px;
+  margin: 0;
+  padding: 15px;
+  overflow: auto;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 760px) {
+  .concepts,
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+}
