@@ -27,7 +27,9 @@ npm run backend
 npm run frontend
 ```
 
-브라우저에서 `http://localhost:3000`에 접속한 뒤 버튼을 누릅니다.
+브라우저에서 `http://localhost:3000`에 접속한 뒤 버튼을 누르면 프로젝트 대시보드 데이터를 불러옵니다.
+
+API 데이터는 `http://localhost:4000/api/dashboard`에서도 직접 확인할 수 있습니다.
 
 ## 핵심 코드
 

@@ -3,15 +3,59 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CORS 예제</title>
+    <title>NOVA 프로젝트 대시보드</title>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo">N</span>
+        <span>NOVA Workspace</span>
+      </div>
+      <span class="server-status">● API 연결 준비</span>
+    </header>
+
     <main>
-      <h1>CORS 예제</h1>
-      <p>프런트엔드 3000 → API 서버 4000</p>
-      <button id="loadButton">서버 데이터 가져오기</button>
-      <p id="result">버튼을 눌러 주세요.</p>
+      <section class="title-area">
+        <div>
+          <p class="eyebrow">PROJECT OVERVIEW</p>
+          <h1>프로젝트 현황</h1>
+          <p class="description">4000번 API 서버의 데이터를 3000번 프런트엔드에서 불러옵니다.</p>
+        </div>
+        <button id="loadButton">서버 데이터 불러오기</button>
+      </section>
+
+      <p id="message" class="message">버튼을 눌러 최신 현황을 확인하세요.</p>
+
+      <section id="dashboard" hidden>
+        <div id="summary" class="summary-grid"></div>
+
+        <section class="project-panel">
+          <div class="panel-title">
+            <div>
+              <p class="eyebrow">ACTIVE WORK</p>
+              <h2>프로젝트 목록</h2>
+            </div>
+            <span id="updatedAt"></span>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>프로젝트</th>
+                  <th>담당자</th>
+                  <th>상태</th>
+                  <th>진행률</th>
+                  <th>예산</th>
+                  <th>마감일</th>
+                </tr>
+              </thead>
+              <tbody id="projectList"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
     </main>
 
     <script src="./app.js"></script>
